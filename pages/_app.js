@@ -1,7 +1,13 @@
-import '../styles/globals.css'
+import { CalculatorContextProvider } from "../packages/features/calculatorContext";
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    // @ts-ignore
+    <CalculatorContextProvider>
+      <Component {...pageProps} />
+    </CalculatorContextProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;

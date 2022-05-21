@@ -1,3 +1,10 @@
+import { useCalculatorContext } from "../packages/features/calculatorContext";
 export default function Home() {
-  return <div>hello world</div>;
+  const { test } = useCalculatorContext();
+  return (
+    <>
+      <div>hello world</div>
+      <div>{test}</div>
+    </>
+  );
 }
