@@ -15,9 +15,6 @@ export default function DieSection() {
             maxWidth='500px'
             templateColumns={{
               base: "repeat(5,1fr)",
-              // sm: "1fr",
-              // md: "repeat(5,1fr)",
-              // lg: "repeat(5,1fr)",
             }}
           >
             <DieRoll props={{ value: "4" }} />
@@ -33,9 +30,6 @@ export default function DieSection() {
             maxWidth='500px'
             templateColumns={{
               base: "repeat(5,1fr)",
-              // sm: "1fr",
-              // md: "repeat(2,1fr)",
-              // lg: "repeat(5,1fr)",
             }}
           >
             <DieRoll props={{ value: "4" }} />
