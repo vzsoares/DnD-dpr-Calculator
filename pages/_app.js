@@ -1,12 +1,16 @@
 import { CalculatorContextProvider } from "../packages/features/calculatorContext";
+import { ChakraProvider } from "@chakra-ui/react";
+
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
-    // @ts-ignore
-    <CalculatorContextProvider>
-      <Component {...pageProps} />
-    </CalculatorContextProvider>
+    <ChakraProvider>
+      {/* @ts-ignore */}
+      <CalculatorContextProvider>
+        <Component {...pageProps} />
+      </CalculatorContextProvider>
+    </ChakraProvider>
   );
 }
 
