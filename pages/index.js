@@ -5,6 +5,7 @@ import AdvancedOptionsSection from "../packages/features/components/AdvancedOpti
 import ArmorSection from "../packages/features/components/ArmorSection";
 import SaveAtackBtn from "../packages/features/components/SaveAtackBtn";
 import CurrentAttackSection from "../packages/features/components/AttackSection";
+import AttacksListSection from "../packages/features/components/AttacksListSection";
 export default function Home() {
   const { test } = useCalculatorContext();
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <br />
       <SaveAtackBtn />
       <CurrentAttackSection />
+      <AttacksListSection />
     </>
   );
 }
