@@ -1,5 +1,5 @@
 // @ts-nocheck
-import DieRoll from "./DieRoll";
+import DieRoll from "../components/DieRoll";
 import { Grid, GridItem, Heading, Box, Flex } from "@chakra-ui/react";
 export default function DieSection() {
   return (

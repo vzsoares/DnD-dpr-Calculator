@@ -13,7 +13,7 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-import AttackTable from "./AttackTable";
+import AttackTable from "../components/AttackTable";
 export default function AttackSection() {
   return (
     <Box maxW='468px'>

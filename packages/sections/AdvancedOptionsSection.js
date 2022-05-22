@@ -1,4 +1,4 @@
-import SelectionSelectInput from "./SelectionSelectInput";
+import SelectionSelectInput from "../components/SelectionSelectInput";
 import { Flex } from "@chakra-ui/react";
 
 export default function AdvancedOptionsSection() {

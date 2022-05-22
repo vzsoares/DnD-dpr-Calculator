@@ -10,7 +10,7 @@ import {
 export default function DieRoll({ props: { value } }) {
   return (
     <Box w='80px'>
-      <Select defaultValue={value}>
+      <Select value={value}>
         <option value='4'>d4</option>
         <option value='6'>d6</option>
         <option value='8'>d8</option>

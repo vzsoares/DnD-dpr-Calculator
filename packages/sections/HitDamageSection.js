@@ -1,5 +1,5 @@
-import HitBonusInput from "./HitBonusInput";
-import SharpShooterCheckBox from "./SharpShooterCheckBox";
+import HitBonusInput from "../components/HitBonusInput";
+import SharpShooterCheckBox from "../components/SharpShooterCheckBox";
 import { Flex } from "@chakra-ui/react";
 export default function HitDamageSection() {
   return (
