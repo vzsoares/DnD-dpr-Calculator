@@ -1,12 +1,15 @@
+// @ts-nocheck
 import { Select, Box, Heading } from "@chakra-ui/react";
-export default function SelectionSelectInput({ props: { value, title } }) {
+export default function SelectionSelectInput({
+  props: { values, title, value, setValue },
+}) {
   return (
     <Box maxW='150px'>
       <Heading fontSize={"1rem"}>{title}</Heading>
-      <Select>
-        {value.map((e) => {
+      <Select value={value} onChange={(e) => setValue(e.target.value)}>
+        {values.map((e) => {
           return (
-            <option value={e} key={e}>
+            <option values={e} key={e}>
               {e}
             </option>
           );
