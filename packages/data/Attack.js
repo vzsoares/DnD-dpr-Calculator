@@ -9,7 +9,7 @@
     as calculating the average damage per round.
 */
 
-export default class Attack {
+class Attack {
     constructor(
         name,                   // string, name of attack
         damage_bonus,           // int, damage bonus, including all possible bonuses
@@ -30,14 +30,18 @@ export default class Attack {
         this.gwmsharp            = gwmsharp;
         this.crit_range          = crit_range;
         this.target_AC           = target_AC;
-        if(gwmsharp) {
-            this.effective_attack_bonus = attack_bonus - 5;
-            this.effective_damage_bonus = damage_bonus + 10;
-        }
-        else {
-            this.effective_damage_bonus = damage_bonus;
-            this.effective_attack_bonus = attack_bonus;
-        }
+    }
+
+    effective_attack_bonus () {
+        if(gwmsharp)
+            return attack_bonus - 5;
+        return attack_bonus;
+    }
+
+    effective_damage_bonus () {
+        if(gwmsharp)
+            return damage_bonus + 10;
+        return damage_bonus;
     }
 
     calculate_average_total_attack_damage() {
@@ -47,18 +51,38 @@ export default class Attack {
     }
 
     calculate_average_damage_from_dice() {
-        return p_hit_mod(this.target_AC, this.effective_attack_bonus, this.advantage_modifier) * 
-        calculate_average_dice_rolls(this.damage_dice);
+        return p_hit(this.target_AC, this.effective_attack_bonus(), this.advantage_modifier) * 
+        average_rolls(this.damage_dice);
     }
 
     calculate_average_damage_from_bonus() {
-        return p_hit_mod(this.target_AC, this.effective_attack_bonus, this.advantage_modifier) * 
-        this.effective_damage_bonus;
+        return p_hit(this.target_AC, this.effective_attack_bonus(), this.advantage_modifier) * 
+        this.effective_damage_bonus();
     }
 
     calculate_average_damage_from_crit_factor() {
         return p_crit(this.crit_range, this.advantage_modifier) * 
-        (calculate_average_dice_rolls(this.crit_dice) - calculate_average_dice_rolls(this.damage_dice));
+        (average_rolls(this.crit_dice) - average_rolls(this.damage_dice));
+    }
+}
+
+class DieRoll {
+    constructor(sides, reroll, min_roll) {
+        this.sides    = sides;
+        this.reroll   = reroll;
+        this.min_roll = min_roll;
+    }
+
+    // Returns the average roll for a die 
+    // given its number of sides, minimum value to reroll once, and minimum roll.
+    average_roll() {
+        if (reroll == 0) {
+            return (T(sides) + T(min_roll - 1)) / sides;
+        }
+        else if(reroll > min_roll)
+            return (T(sides) + T(min_roll - 1) - reroll * min_roll - T(min_roll) + reroll * d(sides, 0, min_roll)) / sides;
+        else if(reroll <= min_roll)
+            return (T(sides) + T(min_roll - 1) - reroll * min_roll + reroll * d(sides, 0, min_roll)) / sides;
     }
 }
 
@@ -67,32 +91,29 @@ export default class Attack {
 //------------------------//
 
 // Returns the sum of the averages of all rolls in a dice set.
-function calculate_average_dice_rolls(dice) {
-    let sum = 0;
-    let i = 0;
-    for (i = 0; i < dice.length; i++) {
-        sum += d(dice[i]);
-    }
-    return sum;
+function average_rolls(dice) {
+    return undefined;
 }
 
-// Returns the average roll for a die, given its number of sides, for example d(8) = 4.5
-function d(sides) {
-    return sides / 2 + 0.5
+// Returns the sum of the averages of all rolls in a dice set
+// given a dice set, which values to reroll, 
+function average_rolls_rerolls(dice, reroll_values, max_rerolls = 0) {
+    return undefined;
 }
 
-// Returns the probability to hit an attack 
-// given the target's armor class, the attacker's attack bonus.
-function p_hit(A, B) {
-    if (A >= B + 20) {
-        return 0.05;
-    }
-    else if (A <= B + 2) {
-        return 0.95;
-    }
-    else {
-        return (21 + B - A) / 20;
-    }
+function T(N) {
+    return (N ** 2 + N) / 2
+}
+
+// Returns the probability to hit an attack
+// given the target's armor class, the attacker's attack bonus, 
+// and the attack's advantage modifier.
+function p_hit(A, B, M = 1) {
+    if (A >= B + 20) 
+        return 1-(1-0.05)**M;
+    else if (A <= B + 2)
+        return 1-(1-0.05)**M;
+    return 1 - ( 1 - ((21 + B - A) / 20))**M;
 }
 
 // Returns the probability of a critical hit
@@ -101,31 +122,8 @@ function p_crit(crit_range, adv_mod) {
     return 1 - Math.pow(1 - (21 - crit_range)/20, adv_mod);
 }
 
-
-// Returns the probability to hit an attack
-// given the target's armor class, the attacker's attack bonus, 
-// and the attack's advantage modifier.
-function p_hit_mod(AC, bonus, adv_mod) {
-    return 1 - Math.pow(1 - p_hit(AC, bonus), adv_mod);
-}
-
-
 //-------------------//
 //--- TEST SCRIPT ---//
 //-------------------//
 
-/*let attack = new Attack(
-    "Glaive Attack", 
-    5, 
-    9, 
-    [10], 
-    [10, 10], 
-    2, 
-    1, 
-    20, 
-    15);
-
-console.log(attack.calculate_average_damage_from_dice());
-console.log(attack.calculate_average_damage_from_bonus());
-console.log(attack.calculate_average_damage_from_crit_factor());
-console.log(attack.calculate_average_total_attack_damage());*/
+console.log(d(6, 3, 6));
