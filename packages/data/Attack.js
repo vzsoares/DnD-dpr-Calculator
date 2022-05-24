@@ -149,4 +149,4 @@ function p_crit(crit_range, adv_mod) {
 //--- TEST SCRIPT ---//
 //-------------------//
 
-console.log(d(6, 3, 6));
+// console.log(d(6, 3, 6));

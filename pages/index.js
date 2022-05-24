@@ -19,7 +19,7 @@ export default function Home() {
       <SaveAttackBtn />
       <CurrentAttackSection />
       <AttacksListSection />
-      {/* TODO modal */}
+      {/* TODO modal,Name */}
     </>
   );
 }
