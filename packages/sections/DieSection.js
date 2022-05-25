@@ -1,45 +1,71 @@
 // @ts-nocheck
-import DieRoll from "../components/DieRoll";
-import { Grid, GridItem, Heading, Box, Flex } from "@chakra-ui/react";
+import SingleDie from "../components/SingleDie";
+import {
+  Grid,
+  GridItem,
+  Heading,
+  Box,
+  Flex,
+  Container,
+} from "@chakra-ui/react";
+import { useCalculatorContext } from "../features/calculatorContext.js";
+
 export default function DieSection() {
+  const { damageDiceList, setDamageDiceList } = useCalculatorContext();
+
+  const dies = [4, 6, 8, 12];
   return (
     <>
-      <Flex
-        display='flex'
-        gap={{ sm: "1", lg: "5" }}
-        direction={{ base: "column", sm: "column", lg: "row" }}
+      {/* TODO change layout */}
+      <Grid
+        templateAreas={`"a a a a d" "c c c c e" "c c c c e" "c c c c b"`}
+        minW={"200px"}
+        maxW={"998px"}
+        minH={"200px"}
       >
-        <div className='damageDieSection'>
-          <Heading>Damage dice</Heading>
+        <Flex gridArea={"a"}>
+          {dies.map((element, index) => {
+            return (
+              <SingleDie
+                key={index}
+                props={{
+                  value: element,
+                  func: () => setDamageDiceList([...damageDiceList, element]),
+                  // func: setDamageDiceList(),
+                }}
+              />
+            );
+          })}
+        </Flex>
+        <Box gridArea={"d"}>
+          <Heading fontSize={"1rem"}>Normal/Crit</Heading>
+          Switch
+        </Box>
+        <Flex gridArea={"e"}>NumberInput/Title</Flex>
+        <Flex gridArea={"b"}>Save/Edit</Flex>
+        <Box gridArea={"c"} mt='1'>
           <Grid
-            maxWidth='500px'
-            templateColumns={{
-              base: "repeat(5,1fr)",
-            }}
+            templateColumns='repeat(6,1fr)'
+            maxW='500px'
+            maxH='500px'
+            overflow='auto'
+            justifyItems='center'
+            gap='1'
           >
-            <DieRoll props={{ value: "4" }} />
-            <DieRoll props={{ value: "6" }} />
-            <DieRoll props={{ value: "8" }} />
-            <DieRoll props={{ value: "10" }} />
-            <DieRoll props={{ value: "12" }} />
+            {damageDiceList?.map((die, index) => {
+              return (
+                <SingleDie
+                  key={index}
+                  props={{
+                    value: die,
+                    // TODO func()
+                  }}
+                />
+              );
+            })}
           </Grid>
-        </div>
-        <div className='critDieSection'>
-          <Heading>Crit dice</Heading>
-          <Grid
-            maxWidth='500px'
-            templateColumns={{
-              base: "repeat(5,1fr)",
-            }}
-          >
-            <DieRoll props={{ value: "4" }} />
-            <DieRoll props={{ value: "6" }} />
-            <DieRoll props={{ value: "8" }} />
-            <DieRoll props={{ value: "10" }} />
-            <DieRoll props={{ value: "12" }} />
-          </Grid>
-        </div>
-      </Flex>
+        </Box>
+      </Grid>
     </>
   );
 }

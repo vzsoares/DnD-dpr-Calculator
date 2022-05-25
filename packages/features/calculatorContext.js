@@ -10,9 +10,9 @@ function CalculatorContextProvider({ children }) {
   const [critDice, setCritDice] = useState("");
   const [advantageModifier, setAdvantageModifier] = useState("");
   const [targetAC, setTargetAC] = useState("");
+  const [damageDiceList, setDamageDiceList] = useState([]);
+  const [critDiceList, setCritDiceList] = useState("");
   const [name, setName] = useState("");
-  const [damageDice, setDamageDice] = useState([]);
-  const [critRange, setCritRange] = useState("");
   //
   const contextData = useMemo(() => {
     return {
@@ -21,6 +21,8 @@ function CalculatorContextProvider({ children }) {
       damageBonus,
       critDice,
       setGwmsharp,
+      damageDiceList,
+      setDamageDiceList,
       targetAC,
       advantageModifier,
       setTargetAC,
@@ -31,6 +33,7 @@ function CalculatorContextProvider({ children }) {
     };
   }, [
     attackBonus,
+    damageDiceList,
     gwmsharp,
     damageBonus,
     targetAC,
