@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useState } from "react";
 // import Attack from "../data/Attack";
 
-const calculatorContext = createContext();
+const calculatorContext = createContext({});
 function CalculatorContextProvider({ children }) {
   //
   const [attackBonus, setAttackBonus] = useState("");

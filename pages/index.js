@@ -8,7 +8,6 @@ import SaveAttackBtn from "../packages/components/SaveAttackBtn";
 import CurrentAttackSection from "../packages/sections/AttackSection";
 import AttacksListSection from "../packages/sections/AttacksListSection";
 export default function Home() {
-  const { test } = useCalculatorContext();
   return (
     <>
       <HitDamageSection />
