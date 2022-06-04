@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   NumberInput,
   NumberInputField,
@@ -5,22 +6,30 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Box,
+  Flex,
   Heading,
 } from "@chakra-ui/react";
 
-export default function HitBonusInput({ props: { roll, value, setValue } }) {
+export default function NumberInputWithTitle({
+  props: { roll, value, setValue, flexDir, justify, font, size },
+}) {
   return (
     <>
-      <Box>
-        <Heading fontSize={"1.5rem"}>{roll}</Heading>
-        <NumberInput maxW='90px' value={value} onChange={(e) => setValue(e)}>
+      <Flex flexDir={flexDir || "column"} justify={justify}>
+        <Heading fontSize={font || "1.5rem"}>{roll}</Heading>
+        <NumberInput
+          maxW='90px'
+          value={value}
+          onChange={(e) => setValue(e)}
+          size={size}
+        >
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />
             <NumberDecrementStepper />
           </NumberInputStepper>
         </NumberInput>
-      </Box>
+      </Flex>
     </>
   );
 }

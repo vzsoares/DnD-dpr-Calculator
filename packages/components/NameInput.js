@@ -7,6 +7,7 @@ export default function NameInput() {
   return (
     <>
       <Input
+        maxW='400px'
         placeholder='Attack Name'
         value={name}
         onChange={(e) => setName(e.target.value)}

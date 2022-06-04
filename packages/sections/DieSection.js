@@ -1,17 +1,18 @@
 // @ts-nocheck
+import React, { useState } from "react";
 import SingleDie from "../components/SingleDie";
-import {
-  Grid,
-  GridItem,
-  Heading,
-  Box,
-  Flex,
-  Container,
-} from "@chakra-ui/react";
+import NumberInputWithTitle from "../components/NumberInputWithTitle";
+import { Grid, Heading, Box, Flex, Switch } from "@chakra-ui/react";
 import { useCalculatorContext } from "../features/calculatorContext.js";
 
 export default function DieSection() {
   const { damageDiceList, setDamageDiceList } = useCalculatorContext();
+  const [switchState, setSwitchState] = useState(false);
+  const dieProperties = [
+    { roll: "Sides", value: 1, setValue: () => {}, flexDir: "row" },
+    { roll: "Reroll below", value: 1, setValue: () => {}, flexDir: "row" },
+    { roll: "Minimum roll", value: 1, setValue: () => {}, flexDir: "row" },
+  ];
 
   const dies = [4, 6, 8, 12];
   return (
@@ -31,17 +32,40 @@ export default function DieSection() {
                 props={{
                   value: element,
                   func: () => setDamageDiceList([...damageDiceList, element]),
-                  // func: setDamageDiceList(),
                 }}
               />
             );
           })}
         </Flex>
+        {/* switch */}
         <Box gridArea={"d"}>
-          <Heading fontSize={"1rem"}>Normal/Crit</Heading>
-          Switch
+          <Heading fontSize={"1rem"}>{switchState ? "Crit" : "Normal"}</Heading>
+          <Switch
+            size='lg'
+            onChange={() => {
+              setSwitchState(!switchState);
+            }}
+          />
         </Box>
-        <Flex gridArea={"e"}>NumberInput/Title</Flex>
+        {/* Die properties */}
+        <Flex gridArea={"e"} flexDir='column'>
+          {dieProperties.map((element, i) => {
+            return (
+              <NumberInputWithTitle
+                key={i}
+                props={{
+                  roll: element.roll,
+                  value: element.value,
+                  setValue: element.setValue,
+                  flexDir: element.flexDir,
+                  justify: "space-between",
+                  font: "1rem",
+                  size: "sm",
+                }}
+              />
+            );
+          })}
+        </Flex>
         <Flex gridArea={"b"}>Save/Edit</Flex>
         <Box gridArea={"c"} mt='1'>
           <Grid
