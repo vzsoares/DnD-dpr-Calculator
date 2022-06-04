@@ -5,10 +5,10 @@ import AdvancedOptionsSection from "../packages/sections/AdvancedOptionsSection"
 // @ts-ignore
 import ArmorSection from "../packages/sections/ArmorSection";
 import SaveAttackBtn from "../packages/components/SaveAttackBtn";
-import CurrentAttackSection from "../packages/sections/AttackSection";
+import AttacksDataSection from "../packages/sections/AttacksDataSection";
 import AttacksListSection from "../packages/sections/AttacksListSection";
+import NameInput from "../packages/components/NameInput";
 export default function Home() {
-  const { test } = useCalculatorContext();
   return (
     <>
       <HitDamageSection />
@@ -16,8 +16,9 @@ export default function Home() {
       <DieSection />
       <ArmorSection />
       <br />
+      <NameInput />
       <SaveAttackBtn />
-      <CurrentAttackSection />
+      <AttacksDataSection />
       <AttacksListSection />
       {/* TODO modal,Name */}
     </>

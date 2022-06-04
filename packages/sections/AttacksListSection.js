@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React from "react";
 import { Grid, GridItem, Container, Flex } from "@chakra-ui/react";
-import AttackItem from "../components/AttackItem";
+import AttackListItem from "../components/AttackListItem";
 export default function AttacksListSection() {
   const attackList = [
     { name: "attack 1", dpr: "9.5" },
@@ -11,7 +11,7 @@ export default function AttacksListSection() {
   return (
     <Grid templateColumns='repeat(1, 1fr)' gap={6} maxW='678px'>
       {attackList.map((e, i) => {
-        return <AttackItem props={{ data: e }} key={i} />;
+        return <AttackListItem props={{ data: e }} key={i} />;
       })}
     </Grid>
   );

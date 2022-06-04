@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { useCalculatorContext } from "../features/calculatorContext.js";
-import HitBonusInput from "../components/HitBonusInput";
+import NumberInputWithTitle from "../components/NumberInputWithTitle";
 import SharpShooterCheckBox from "../components/SharpShooterCheckBox";
 import { Flex } from "@chakra-ui/react";
 export default function HitDamageSection() {
@@ -17,10 +18,10 @@ export default function HitDamageSection() {
       gap={{ sm: "5", lg: "10" }}
       direction={{ base: "column", sm: "row", md: "row", lg: "row" }}
     >
-      <HitBonusInput
+      <NumberInputWithTitle
         props={{ roll: "HIT/DC", value: attackBonus, setValue: setAttackBonus }}
       />
-      <HitBonusInput
+      <NumberInputWithTitle
         props={{
           roll: "Damage Dice",
           value: damageBonus,
