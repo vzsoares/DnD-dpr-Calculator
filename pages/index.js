@@ -5,7 +5,7 @@ import AdvancedOptionsSection from "../packages/sections/AdvancedOptionsSection"
 // @ts-ignore
 import ArmorSection from "../packages/sections/ArmorSection";
 import SaveAttackBtn from "../packages/components/SaveAttackBtn";
-import CurrentAttackSection from "../packages/sections/AttackSection";
+import AttacksDataSection from "../packages/sections/AttacksDataSection";
 import AttacksListSection from "../packages/sections/AttacksListSection";
 export default function Home() {
   return (
@@ -16,7 +16,7 @@ export default function Home() {
       <ArmorSection />
       <br />
       <SaveAttackBtn />
-      <CurrentAttackSection />
+      <AttacksDataSection />
       <AttacksListSection />
       {/* TODO modal,Name */}
     </>

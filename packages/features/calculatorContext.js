@@ -4,12 +4,12 @@ import { createContext, useContext, useMemo, useState } from "react";
 const calculatorContext = createContext({});
 function CalculatorContextProvider({ children }) {
   //
-  const [attackBonus, setAttackBonus] = useState("");
-  const [damageBonus, setDamageBonus] = useState("");
+  const [attackBonus, setAttackBonus] = useState(1);
+  const [damageBonus, setDamageBonus] = useState(1);
   const [gwmsharp, setGwmsharp] = useState(false);
-  const [critDice, setCritDice] = useState("");
-  const [advantageModifier, setAdvantageModifier] = useState("");
-  const [targetAC, setTargetAC] = useState("");
+  const [critRange, setCritRange] = useState("20-20");
+  const [advantageModifier, setAdvantageModifier] = useState("Normal");
+  const [targetAC, setTargetAC] = useState(12);
   const [damageDiceList, setDamageDiceList] = useState([]);
   const [critDiceList, setCritDiceList] = useState("");
   const [name, setName] = useState("");
@@ -19,7 +19,7 @@ function CalculatorContextProvider({ children }) {
       attackBonus,
       gwmsharp,
       damageBonus,
-      critDice,
+      critRange,
       setGwmsharp,
       damageDiceList,
       setDamageDiceList,
@@ -27,7 +27,7 @@ function CalculatorContextProvider({ children }) {
       advantageModifier,
       setTargetAC,
       setAdvantageModifier,
-      setCritDice,
+      setCritRange,
       setAttackBonus,
       setDamageBonus,
     };
@@ -38,7 +38,7 @@ function CalculatorContextProvider({ children }) {
     damageBonus,
     targetAC,
     setGwmsharp,
-    critDice,
+    critRange,
     advantageModifier,
   ]);
   return (

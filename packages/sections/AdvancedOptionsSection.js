@@ -1,22 +1,22 @@
 // @ts-nocheck
-import SelectionInput from "../components/SelectionInput";
+import SelectInput from "../components/SelectInput";
 import { Flex } from "@chakra-ui/react";
 import { useCalculatorContext } from "../features/calculatorContext.js";
 
 export default function AdvancedOptionsSection() {
-  const { critDice, setCritDice, advantageModifier, setAdvantageModifier } =
+  const { critRange, setCritRange, advantageModifier, setAdvantageModifier } =
     useCalculatorContext();
   return (
     <Flex gap='5'>
-      <SelectionInput
+      <SelectInput
         props={{
           values: ["20-20", "19-20", "18-20"],
           title: "Crit Range",
-          value: critDice,
-          setValue: setCritDice,
+          value: critRange,
+          setValue: setCritRange,
         }}
       />
-      <SelectionInput
+      <SelectInput
         props={{
           values: ["Normal", "Advantage", "Elven accuracy"],
           title: "Advantage Modifier",
