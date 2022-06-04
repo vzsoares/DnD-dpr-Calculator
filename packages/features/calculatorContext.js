@@ -20,6 +20,8 @@ function CalculatorContextProvider({ children }) {
       gwmsharp,
       damageBonus,
       critRange,
+      name,
+      setName,
       setGwmsharp,
       damageDiceList,
       setDamageDiceList,
@@ -33,6 +35,7 @@ function CalculatorContextProvider({ children }) {
     };
   }, [
     attackBonus,
+    name,
     damageDiceList,
     gwmsharp,
     damageBonus,
