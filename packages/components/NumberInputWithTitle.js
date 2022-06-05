@@ -18,13 +18,15 @@ export default function NumberInputWithTitle({
     size,
     flexDir = "column",
     font = "1.5rem",
+    disabled = false,
   },
 }) {
   return (
     <>
-      <Flex flexDir={flexDir} justify={justify}>
+      <Flex flexDir={{ base: "column", md: flexDir }} justify={justify}>
         <Heading fontSize={font}>{roll}</Heading>
         <NumberInput
+          isDisabled={disabled}
           maxW='90px'
           value={value}
           onChange={(e) => setValue(e)}
