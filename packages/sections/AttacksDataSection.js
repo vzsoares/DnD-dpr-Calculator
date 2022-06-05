@@ -13,15 +13,17 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
-import AttackTable from "./AttackTable";
+import AttackInfoTable from "../components/AttackInfoTable";
 export default function AttackSection() {
   return (
     <Box maxW='468px'>
       <Heading>Current Attack info</Heading>
-      <AttackTable props={{ value: ["1", "2", "3", "4", "5"], lines: "" }} />
+      <AttackInfoTable
+        props={{ value: ["1", "2", "3", "4", "5"], lines: "" }}
+      />
       <br />
       <Heading>Total Attacks info</Heading>
-      <AttackTable
+      <AttackInfoTable
         props={{
           value: ["1", "2", "3", "4", "5", "6"],
           lines: "Number of Attacks",

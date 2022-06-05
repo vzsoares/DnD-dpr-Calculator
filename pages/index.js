@@ -1,13 +1,14 @@
 import { useCalculatorContext } from "../packages/features/calculatorContext";
-import DieSection from "../packages/features/components/DieSection";
-import HitDamageSection from "../packages/features/components/HitDamageSection";
-import AdvancedOptionsSection from "../packages/features/components/AdvancedOptionsSection";
-import ArmorSection from "../packages/features/components/ArmorSection";
-import SaveAtackBtn from "../packages/features/components/SaveAtackBtn";
-import CurrentAttackSection from "../packages/features/components/AttackSection";
-import AttacksListSection from "../packages/features/components/AttacksListSection";
+import DieSection from "../packages/sections/DieSection";
+import HitDamageSection from "../packages/sections/HitDamageSection";
+import AdvancedOptionsSection from "../packages/sections/AdvancedOptionsSection";
+// @ts-ignore
+import ArmorSection from "../packages/sections/ArmorSection";
+import SaveAttackBtn from "../packages/components/SaveAttackBtn";
+import AttacksDataSection from "../packages/sections/AttacksDataSection";
+import AttacksListSection from "../packages/sections/AttacksListSection";
+import NameInput from "../packages/components/NameInput";
 export default function Home() {
-  const { test } = useCalculatorContext();
   return (
     <>
       <HitDamageSection />
@@ -15,8 +16,9 @@ export default function Home() {
       <DieSection />
       <ArmorSection />
       <br />
-      <SaveAtackBtn />
-      <CurrentAttackSection />
+      <NameInput />
+      <SaveAttackBtn />
+      <AttacksDataSection />
       <AttacksListSection />
     </>
   );
