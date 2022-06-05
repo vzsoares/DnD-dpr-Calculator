@@ -20,7 +20,6 @@ export default function Home() {
       <SaveAttackBtn />
       <AttacksDataSection />
       <AttacksListSection />
-      {/* TODO modal,Name */}
     </>
   );
 }

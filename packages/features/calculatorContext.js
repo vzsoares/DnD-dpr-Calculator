@@ -11,37 +11,39 @@ function CalculatorContextProvider({ children }) {
   const [advantageModifier, setAdvantageModifier] = useState("Normal");
   const [targetAC, setTargetAC] = useState(12);
   const [damageDiceList, setDamageDiceList] = useState([]);
-  const [critDiceList, setCritDiceList] = useState("");
+  const [critDiceList, setCritDiceList] = useState([]);
   const [name, setName] = useState("");
   //
   const contextData = useMemo(() => {
     return {
       attackBonus,
+      setAttackBonus,
       gwmsharp,
+      setGwmsharp,
       damageBonus,
+      setDamageBonus,
+      critDiceList,
+      setCritDiceList,
       critRange,
+      setCritRange,
       name,
       setName,
-      setGwmsharp,
       damageDiceList,
       setDamageDiceList,
       targetAC,
-      advantageModifier,
       setTargetAC,
+      advantageModifier,
       setAdvantageModifier,
-      setCritRange,
-      setAttackBonus,
-      setDamageBonus,
     };
   }, [
     attackBonus,
-    name,
-    damageDiceList,
     gwmsharp,
     damageBonus,
-    targetAC,
-    setGwmsharp,
+    critDiceList,
     critRange,
+    name,
+    damageDiceList,
+    targetAC,
     advantageModifier,
   ]);
   return (

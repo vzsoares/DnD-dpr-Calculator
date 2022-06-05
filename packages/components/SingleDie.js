@@ -1,11 +1,11 @@
 import { Box } from "@chakra-ui/react";
-export default function SingleDie({ props: { value, func } }) {
+export default function SingleDie({ props: { value, func, color } }) {
   function handleClick(e) {
     e.preventDefault();
     func();
   }
   return (
-    <Box h='50px' w='50px' bgColor='green' border='2px solid black'>
+    <Box h='50px' w='50px' bgColor={color || "green"} border='2px solid black'>
       <a
         style={{
           cursor: "pointer",
@@ -22,7 +22,7 @@ export default function SingleDie({ props: { value, func } }) {
             justifyContent: "center",
           }}
         >
-          d{value}
+          <h1 style={{ fontWeight: "bolder" }}>{value.sides ?? value}</h1>
         </div>
       </a>
     </Box>

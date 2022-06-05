@@ -19,7 +19,11 @@ export default function HitDamageSection() {
       direction={{ base: "column", sm: "row", md: "row", lg: "row" }}
     >
       <NumberInputWithTitle
-        props={{ roll: "HIT/DC", value: attackBonus, setValue: setAttackBonus }}
+        props={{
+          roll: "HIT/DC",
+          value: attackBonus,
+          setValue: setAttackBonus,
+        }}
       />
       <NumberInputWithTitle
         props={{
