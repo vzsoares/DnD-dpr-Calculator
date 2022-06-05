@@ -13,24 +13,90 @@ export default function DieSection() {
   const [displayedDiceList, setDisplayedDiceList] = useState(damageDiceList);
   const [editingIndex, setEditingIndex] = useState(-1);
 
+  const [sides, setSides] = useState(1);
+  const [reroll, setReroll] = useState(1);
+  const [minRoll, setMinRoll] = useState(1);
+
   useEffect(() => {
-    setDisplayedDiceList(
-      !switchState
-        ? damageDiceList.sort((a, b) => a.sides - b.sides)
-        : critDiceList.sort((a, b) => a.sides - b.sides)
-    );
+    // setDisplayedDiceList(
+    //   !switchState
+    //     ? damageDiceList.sort((a, b) => a.sides - b.sides)
+    //     : critDiceList.sort((a, b) => a.sides - b.sides)
+    // );
+    setDisplayedDiceList(!switchState ? damageDiceList : critDiceList);
   }, [damageDiceList, critDiceList, switchState]);
 
   const dieProperties = [
-    { roll: "Sides", value: 1, setValue: () => {}, flexDir: "row" },
-    { roll: "Reroll below", value: 1, setValue: () => {}, flexDir: "row" },
-    { roll: "Minimum roll", value: 1, setValue: () => {}, flexDir: "row" },
+    {
+      roll: "Sides",
+      value: sides,
+      setValue: (e) => setSides(e),
+      flexDir: "row",
+    },
+    {
+      roll: "Reroll below",
+      value: reroll,
+      setValue: (e) => setReroll(e),
+      flexDir: "row",
+    },
+    {
+      roll: "Minimum roll",
+      value: minRoll,
+      setValue: (e) => setMinRoll(e),
+      flexDir: "row",
+    },
   ];
 
   const defaultDies = [4, 6, 8, 12];
 
   function getUniqueId() {
     return new Date().getTime();
+  }
+
+  function startEditing(index) {
+    setEditingIndex(index);
+    const objectID = displayedDiceList[index].id;
+    setSides(displayedDiceList.find((e) => e.id === objectID)?.sides ?? 1);
+    setReroll(displayedDiceList.find((e) => e.id === objectID)?.reroll ?? 1);
+    setMinRoll(displayedDiceList.find((e) => e.id === objectID)?.minRoll ?? 1);
+  }
+
+  function saveDie() {
+    const objectID = displayedDiceList[editingIndex].id;
+    const saveLogic = (prevState) => {
+      return prevState.map((element) => {
+        if (element.id === objectID) {
+          return {
+            ...element,
+            sides: sides,
+            reroll: reroll,
+            minRoll: minRoll,
+          };
+        }
+        return element;
+      });
+    };
+    if (!switchState) {
+      setDamageDiceList(saveLogic(damageDiceList));
+    } else if (switchState) {
+      setCritDiceList(saveLogic(critDiceList));
+    }
+    setEditingIndex(-1);
+  }
+
+  function deleteDie() {
+    const objectID = displayedDiceList[editingIndex].id;
+
+    const saveLogic = (prevState) => {
+      return prevState.filter((element) => element.id !== objectID);
+    };
+
+    if (!switchState) {
+      setDamageDiceList(saveLogic(damageDiceList));
+    } else if (switchState) {
+      setCritDiceList(saveLogic(critDiceList));
+    }
+    setEditingIndex(-1);
   }
   return (
     <>
@@ -115,9 +181,18 @@ export default function DieSection() {
         </Flex>
         {/* save/delete btn */}
         <Flex gridArea={"b"} flexDir='column' gap='1' p='1rem'>
-          {/* TODO Btns */}
-          <Button isDisabled={editingIndex === -1 && true}>Save</Button>
-          <Button isDisabled={editingIndex === -1 && true}>Delete</Button>
+          <Button
+            onClick={() => saveDie()}
+            isDisabled={editingIndex === -1 && true}
+          >
+            Save
+          </Button>
+          <Button
+            onClick={() => deleteDie()}
+            isDisabled={editingIndex === -1 && true}
+          >
+            Delete
+          </Button>
         </Flex>
         {/* Dice Grid */}
         <Box gridArea={"c"} mt='1'>
@@ -135,7 +210,7 @@ export default function DieSection() {
                   key={index}
                   props={{
                     value: die,
-                    func: () => setEditingIndex(index),
+                    func: () => startEditing(index),
                     color: editingIndex === index && "#e6b517",
                   }}
                 />
