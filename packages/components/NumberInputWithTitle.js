@@ -5,7 +5,6 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Box,
   Flex,
   Heading,
 } from "@chakra-ui/react";

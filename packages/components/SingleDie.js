@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 export default function SingleDie({ props: { value, func } }) {
   function handleClick(e) {
     e.preventDefault();
-    func();
+    func(value);
   }
   return (
     <Box h='50px' w='50px' bgColor='green' border='2px solid black'>

@@ -2,12 +2,15 @@
 import React, { useState } from "react";
 import SingleDie from "../components/SingleDie";
 import NumberInputWithTitle from "../components/NumberInputWithTitle";
-import { Grid, Heading, Box, Flex, Switch } from "@chakra-ui/react";
+import { Grid, Heading, Box, Flex, Switch, Button } from "@chakra-ui/react";
 import { useCalculatorContext } from "../features/calculatorContext.js";
 
 export default function DieSection() {
-  const { damageDiceList, setDamageDiceList } = useCalculatorContext();
+  const { damageDiceList, setDamageDiceList, critDiceList, setCritDiceList } =
+    useCalculatorContext();
+
   const [switchState, setSwitchState] = useState(false);
+
   const dieProperties = [
     { roll: "Sides", value: 1, setValue: () => {}, flexDir: "row" },
     { roll: "Reroll below", value: 1, setValue: () => {}, flexDir: "row" },
@@ -17,7 +20,6 @@ export default function DieSection() {
   const dies = [4, 6, 8, 12];
   return (
     <>
-      {/* TODO change layout */}
       <Grid
         templateAreas={`"a a a a d" "c c c c e" "c c c c e" "c c c c b"`}
         minW={"200px"}
@@ -31,7 +33,7 @@ export default function DieSection() {
                 key={index}
                 props={{
                   value: element,
-                  func: () => setDamageDiceList([...damageDiceList, element]),
+                  func: (e) => setDamageDiceList([...damageDiceList, e]),
                 }}
               />
             );
@@ -66,7 +68,11 @@ export default function DieSection() {
             );
           })}
         </Flex>
-        <Flex gridArea={"b"}>Save/Edit</Flex>
+        {/* save/delete btn */}
+        <Flex gridArea={"b"} flexDir='column' gap='1' p='1rem'>
+          <Button>Save</Button>
+          <Button>Delete</Button>
+        </Flex>
         <Box gridArea={"c"} mt='1'>
           <Grid
             templateColumns='repeat(6,1fr)'
