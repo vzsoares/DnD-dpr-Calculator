@@ -47,7 +47,7 @@ export default function DieSection() {
     },
   ];
 
-  const defaultDies = [4, 6, 8, 12];
+  const defaultDies = [4, 6, 8, 10, 12];
 
   function getUniqueId() {
     return new Date().getTime();
