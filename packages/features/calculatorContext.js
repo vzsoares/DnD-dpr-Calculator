@@ -27,7 +27,7 @@ function CalculatorContextProvider({ children }) {
     20,
     targetAC
   );
-  console.log(singleAttack);
+  console.log(singleAttack.getAverageFromDice());
   //
 
   const contextData = useMemo(() => {
