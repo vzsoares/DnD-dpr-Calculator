@@ -209,7 +209,7 @@ function p_crit(crit_range: number, adv_mod: number): number {
 //--- TEST SCRIPT ---//
 //-------------------//
 
-let my_attack = new Attack(
+/*let my_attack = new Attack(
     "Holy Attack",
     9,
     5,
@@ -226,4 +226,4 @@ console.log("\n          Chance to Hit: " + p_hit(15, 9, 1));
 console.log("       Damage From Dice: " + my_attack.getAverageFromDice());
 console.log("      Damage From Bonus: " + my_attack.getAverageFromBonus());
 console.log("Damage From Crit Factor: " + my_attack.getAverageFromCritFactor());
-console.log("           Damage Total: " + my_attack.getAverageTotal());
+console.log("           Damage Total: " + my_attack.getAverageTotal());*/
