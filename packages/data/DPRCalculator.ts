@@ -10,7 +10,7 @@
     as calculating the average damage per round.
 */
 
-class Attack {
+export default class Attack {
   name: string;
   attack_bonus: number;
   damage_bonus: number;

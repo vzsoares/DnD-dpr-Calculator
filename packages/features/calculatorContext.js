@@ -1,19 +1,35 @@
 import { createContext, useContext, useMemo, useState } from "react";
-// import Attack from "../data/Attack";
+import DPRCalculator from "../data/DPRCalculator.ts";
 
 const calculatorContext = createContext({});
 function CalculatorContextProvider({ children }) {
   //
+  const [name, setName] = useState("");
   const [attackBonus, setAttackBonus] = useState(1);
   const [damageBonus, setDamageBonus] = useState(1);
-  const [gwmsharp, setGwmsharp] = useState(false);
-  const [critRange, setCritRange] = useState("20-20");
-  const [advantageModifier, setAdvantageModifier] = useState("Normal");
-  const [targetAC, setTargetAC] = useState(12);
   const [damageDiceList, setDamageDiceList] = useState([]);
   const [critDiceList, setCritDiceList] = useState([]);
-  const [name, setName] = useState("");
+  const [advantageModifier, setAdvantageModifier] = useState("Normal");
+  const [gwmsharp, setGwmsharp] = useState(false);
+  const [critRange, setCritRange] = useState("20-20");
+  const [targetAC, setTargetAC] = useState(12);
   //
+
+  //
+  const singleAttack = new DPRCalculator(
+    name,
+    attackBonus,
+    damageBonus,
+    damageDiceList,
+    critDiceList,
+    1,
+    gwmsharp,
+    20,
+    targetAC
+  );
+  console.log(singleAttack);
+  //
+
   const contextData = useMemo(() => {
     return {
       attackBonus,
