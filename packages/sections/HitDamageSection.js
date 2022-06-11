@@ -27,7 +27,7 @@ export default function HitDamageSection() {
       />
       <NumberInputWithTitle
         props={{
-          roll: "Damage Dice",
+          roll: "Damage Bonus",
           value: damageBonus,
           setValue: setDamageBonus,
         }}

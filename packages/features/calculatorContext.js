@@ -1,4 +1,11 @@
-import { createContext, useContext, useMemo, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import DPRCalculator from "../data/DPRCalculator.ts";
 
 const calculatorContext = createContext({});
@@ -13,34 +20,38 @@ function CalculatorContextProvider({ children }) {
   const [gwmsharp, setGwmsharp] = useState(false);
   const [critRange, setCritRange] = useState("20-20");
   const [targetAC, setTargetAC] = useState(12);
-  // other vars
-  const currentAttackData = new DPRCalculator(
-    name,
-    attackBonus,
-    damageBonus,
-    damageDiceList,
-    critDiceList,
-    advantageModifier === "Normal"
-      ? 1
-      : advantageModifier === "Advantage"
-      ? 2
-      : 3,
-    gwmsharp,
-    critRange === "20-20" ? 20 : critRange === "20-19" ? 19 : 18,
-    targetAC
-  );
-  const [currentAttackInfo, setCurrentAttackInfo] = useState({});
 
+  // other vars
+  const [displayedAttackInfo, setDisplayedAttackInfo] = useState({});
+  const [currentAttackData, setCurrentAttackData] = useState();
+  const [attacksList, setAttacksList] = useState([]);
   //effects
   useEffect(() => {
-    setCurrentAttackInfo({
-      damageFromDice: currentAttackData.getAverageFromDice(),
-      damageFromBonus: currentAttackData.getAverageFromBonus(),
-      damageFromCritFactor: currentAttackData.getAverageFromCritFactor(),
-      totalAttackDamage: currentAttackData.getAverageTotal(),
+    setCurrentAttackData(
+      new DPRCalculator(
+        name,
+        attackBonus,
+        damageBonus,
+        damageDiceList,
+        critDiceList,
+        advantageModifier === "Normal"
+          ? 1
+          : advantageModifier === "Advantage"
+          ? 2
+          : 3,
+        gwmsharp,
+        critRange === "20-20" ? 20 : critRange === "20-19" ? 19 : 18,
+        targetAC
+      )
+    );
+
+    setDisplayedAttackInfo({
+      damageFromDice: currentAttackData?.getAverageFromDice(),
+      damageFromBonus: currentAttackData?.getAverageFromBonus(),
+      damageFromCritFactor: currentAttackData?.getAverageFromCritFactor(),
+      totalAttackDamage: currentAttackData?.getAverageTotal(),
     });
   }, [
-    name,
     attackBonus,
     damageBonus,
     damageDiceList,
@@ -49,12 +60,30 @@ function CalculatorContextProvider({ children }) {
     gwmsharp,
     critRange,
     targetAC,
+    name,
+    currentAttackData,
   ]);
 
-  //
-  function SaveAttack() {
-    console.log(currentAttackData.getAverageTotal());
+  //functions
+  function clearDisplayedData() {
+    setName("");
+    setAttackBonus(0);
+    setDamageBonus(0);
+    setDamageDiceList([]);
+    setCritDiceList([]);
+    setAdvantageModifier("Normal");
+    setGwmsharp(false);
+    setCritRange("20-20");
+    setTargetAC(12);
   }
+
+  const saveAttack = useCallback(() => {
+    setAttacksList([
+      ...attacksList,
+      { ...currentAttackData, id: new Date().getTime() },
+    ]);
+    clearDisplayedData();
+  }, [attacksList, currentAttackData]);
   //
 
   const contextData = useMemo(() => {
@@ -77,11 +106,13 @@ function CalculatorContextProvider({ children }) {
       setTargetAC,
       advantageModifier,
       setAdvantageModifier,
-      SaveAttack,
+      displayedAttackInfo,
+      saveAttack,
     };
   }, [
     attackBonus,
     gwmsharp,
+    displayedAttackInfo,
     damageBonus,
     critDiceList,
     critRange,
@@ -89,6 +120,7 @@ function CalculatorContextProvider({ children }) {
     damageDiceList,
     targetAC,
     advantageModifier,
+    saveAttack,
   ]);
   return (
     <calculatorContext.Provider value={contextData}>
