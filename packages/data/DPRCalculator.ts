@@ -143,10 +143,12 @@ class Die {
 class DiceSet {
   dice: Die[];
 
-  constructor(dice: number[]) {
-    this.dice = [];
+  constructor(dice: {sides: number, reroll: number, minRoll: number, id: number}[]) {
+    this.dice = []
     for (let i = 0; i < dice.length; i++) {
-      this.dice.push(new Die(dice[i]));
+      this.dice.push(
+        new Die(dice[i].sides, dice[i].reroll, dice[i].minRoll)
+      );
     }
   }
 
@@ -207,12 +209,12 @@ function p_crit(crit_range: number, adv_mod: number): number {
 //--- TEST SCRIPT ---//
 //-------------------//
 
-/*let my_attack = new Attack(
+let my_attack = new Attack(
     "Holy Attack",
     9,
     5,
-    new DiceSet([6,6]),
-    new DiceSet([6,6,6,6,8,8,8,8,8,8,8,8]),
+    new DiceSet([ { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905668944 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669096 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669215 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669341 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669453 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669573 }, { "sides": 8, "reroll": 1, "minRoll": 1, "id": 1654905669813 }, { "sides": 8, "reroll": 1, "minRoll": 1, "id": 1654905669927 } ]),
+    new DiceSet([ { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905668944 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669096 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669215 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669341 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669453 }, { "sides": 12, "reroll": 1, "minRoll": 1, "id": 1654905669573 }, { "sides": 8, "reroll": 1, "minRoll": 1, "id": 1654905669813 }, { "sides": 8, "reroll": 1, "minRoll": 1, "id": 1654905669927 } ]),
     1,
     false,
     20,
@@ -224,4 +226,4 @@ console.log("\n          Chance to Hit: " + p_hit(15, 9, 1));
 console.log("       Damage From Dice: " + my_attack.getAverageFromDice());
 console.log("      Damage From Bonus: " + my_attack.getAverageFromBonus());
 console.log("Damage From Crit Factor: " + my_attack.getAverageFromCritFactor());
-console.log("           Damage Total: " + my_attack.getAverageTotal());*/
+console.log("           Damage Total: " + my_attack.getAverageTotal());
