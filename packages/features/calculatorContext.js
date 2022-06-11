@@ -27,7 +27,9 @@ function CalculatorContextProvider({ children }) {
     20,
     targetAC
   );
-  console.log(singleAttack.getAverageFromDice());
+  function SaveAttack() {
+    console.log(singleAttack.getAverageTotal());
+  }
   //
 
   const contextData = useMemo(() => {
@@ -50,6 +52,7 @@ function CalculatorContextProvider({ children }) {
       setTargetAC,
       advantageModifier,
       setAdvantageModifier,
+      SaveAttack,
     };
   }, [
     attackBonus,
