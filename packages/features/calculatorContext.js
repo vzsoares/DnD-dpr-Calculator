@@ -12,8 +12,8 @@ const calculatorContext = createContext({});
 function CalculatorContextProvider({ children }) {
   // class essential vars
   const [name, setName] = useState("");
-  const [attackBonus, setAttackBonus] = useState(1);
-  const [damageBonus, setDamageBonus] = useState(1);
+  const [attackBonus, setAttackBonus] = useState(0);
+  const [damageBonus, setDamageBonus] = useState(0);
   const [damageDiceList, setDamageDiceList] = useState([]);
   const [critDiceList, setCritDiceList] = useState([]);
   const [advantageModifier, setAdvantageModifier] = useState("Normal");
