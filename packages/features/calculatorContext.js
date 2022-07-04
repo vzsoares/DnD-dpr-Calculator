@@ -20,7 +20,6 @@ function CalculatorContextProvider({ children }) {
   const [gwmsharp, setGwmsharp] = useState(false);
   const [critRange, setCritRange] = useState("20-20");
   const [targetAC, setTargetAC] = useState(12);
-
   // other vars
   const [displayedAttackInfo, setDisplayedAttackInfo] = useState({});
   const [currentAttackData, setCurrentAttackData] = useState();
@@ -30,8 +29,8 @@ function CalculatorContextProvider({ children }) {
     setCurrentAttackData(
       new DPRCalculator(
         name,
-        attackBonus,
-        damageBonus,
+        Number(attackBonus),
+        Number(damageBonus),
         damageDiceList,
         critDiceList,
         advantageModifier === "Normal"
@@ -40,7 +39,7 @@ function CalculatorContextProvider({ children }) {
           ? 2
           : 3,
         gwmsharp,
-        critRange === "20-20" ? 20 : critRange === "20-19" ? 19 : 18,
+        critRange === "20-20" ? 20 : critRange === "19-20" ? 19 : 18,
         targetAC
       )
     );
@@ -61,7 +60,6 @@ function CalculatorContextProvider({ children }) {
     critRange,
     targetAC,
     name,
-    currentAttackData,
   ]);
 
   //functions

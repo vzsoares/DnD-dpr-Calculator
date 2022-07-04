@@ -129,7 +129,7 @@ export default function DieSection() {
                             ...critDiceList,
                             {
                               sides: element,
-                              reroll: 1,
+                              reroll: 0,
                               minRoll: 1,
                               id: getUniqueId(),
                             },
