@@ -68,7 +68,7 @@ class Attack {
         this.target_AC,
         this.getEffectiveAttackBonus(),
         this.advantage_modifier
-      ) * this.damage_dice.getAverageRolls()
+      ) * new DiceSet(this.damage_dice).getAverageRolls()
     );
   }
 
@@ -96,7 +96,8 @@ class Attack {
   getAverageFromCritFactor() {
     return (
       p_crit(this.crit_range, this.advantage_modifier) *
-      (this.crit_dice.getAverageRolls() - this.damage_dice.getAverageRolls())
+      (new DiceSet(this.crit_dice).getAverageRolls() -
+        new DiceSet(this.damage_dice).getAverageRolls())
     );
   }
 
@@ -161,12 +162,12 @@ class Die {
 class DiceSet {
   dice: Die[];
 
-  constructor(dice: {sides: number, reroll: number, minRoll: number, id: number}[]) {
-    this.dice = []
+  constructor(
+    dice: { sides: number; reroll: number; minRoll: number; id: number }[]
+  ) {
+    this.dice = [];
     for (let i = 0; i < dice.length; i++) {
-      this.dice.push(
-        new Die(dice[i].sides, dice[i].reroll, dice[i].minRoll)
-      );
+      this.dice.push(new Die(dice[i].sides, dice[i].reroll, dice[i].minRoll));
     }
   }
 

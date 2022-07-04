@@ -47,7 +47,7 @@ export default function DieSection() {
     },
   ];
 
-  const defaultDies = [4, 6, 8, 12];
+  const defaultDies = [4, 6, 8, 10, 12];
 
   function getUniqueId() {
     return new Date().getTime();
@@ -57,7 +57,7 @@ export default function DieSection() {
     setEditingIndex(index);
     const objectID = displayedDiceList[index].id;
     setSides(displayedDiceList.find((e) => e.id === objectID)?.sides ?? 1);
-    setReroll(displayedDiceList.find((e) => e.id === objectID)?.reroll ?? 1);
+    setReroll(displayedDiceList.find((e) => e.id === objectID)?.reroll ?? 0);
     setMinRoll(displayedDiceList.find((e) => e.id === objectID)?.minRoll ?? 1);
   }
 
@@ -120,7 +120,7 @@ export default function DieSection() {
                             ...damageDiceList,
                             {
                               sides: element,
-                              reroll: 1,
+                              reroll: 0,
                               minRoll: 1,
                               id: getUniqueId(),
                             },
