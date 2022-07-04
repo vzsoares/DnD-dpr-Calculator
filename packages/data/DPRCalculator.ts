@@ -10,26 +10,26 @@
     as calculating the average damage per round.
 */
 
-class Attack {
-  name: string;                 // custom name for the attack
-  attack_bonus: number;         // attack roll bonus, also known as hit/dc
-  damage_bonus: number;         // damage roll bonus, for example bonus for strength or magic items.
-  damage_dice: DiceSet;         // array of die, for example 2d6 for a greatsword.
-  crit_dice: DiceSet;           // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
-  advantage_modifier: number;   // 1 for normal, 2 for advantage and 3 for elven accuracy
-  gwmsharp: boolean;            // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus.
-  crit_range: number;           // 20 for crit on 20 only. 19 for crit range of 19-20.
-  target_AC: number;            // target's armor class.
+export default class Attack {
+  name: string; // custom name for the attack
+  attack_bonus: number; // attack roll bonus, also known as hit/dc
+  damage_bonus: number; // damage roll bonus, for example bonus for strength or magic items.
+  damage_dice: DiceSet; // array of die, for example 2d6 for a greatsword.
+  crit_dice: DiceSet; // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
+  advantage_modifier: number; // 1 for normal, 2 for advantage and 3 for elven accuracy
+  gwmsharp: boolean; // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus.
+  crit_range: number; // 20 for crit on 20 only. 19 for crit range of 19-20.
+  target_AC: number; // target's armor class.
 
   constructor(
-    name: string,               
-    attack_bonus: number,      
-    damage_bonus: number,      
-    damage_dice: DiceSet, 
-    crit_dice: DiceSet, 
-    advantage_modifier: number, 
-    gwmsharp: boolean, 
-    crit_range: number, 
+    name: string,
+    attack_bonus: number,
+    damage_bonus: number,
+    damage_dice: DiceSet,
+    crit_dice: DiceSet,
+    advantage_modifier: number,
+    gwmsharp: boolean,
+    crit_range: number,
     target_AC: number
   ) {
     this.name = name;
@@ -61,7 +61,7 @@ class Attack {
 
   // Returns the average damage from dice only ACCOUNTING FOR CHANCE TO HIT.
   // For example, if your chance to hit is 65% and you are attacking with a greatsword with advantage,
-  // your average damage will be (1 - (1 - 0.65) ^ 2) * (2 * 3.5) = 6.1425 
+  // your average damage will be (1 - (1 - 0.65) ^ 2) * (2 * 3.5) = 6.1425
   getAverageFromDice() {
     return (
       p_hit(
@@ -85,9 +85,9 @@ class Attack {
     );
   }
 
-  // Returns the average damage PER TURN derived from critical hits. 
+  // Returns the average damage PER TURN derived from critical hits.
   // THIS IS NOT A CALCULATION OF THE AVERAGE DAMAGE DEALT BY A CRITICAL HIT.
-  // For example if chance to hit is 65%, you are attacking with a greatsword, you have advantage, 
+  // For example if chance to hit is 65%, you are attacking with a greatsword, you have advantage,
   // you crit on 19-20, and you use 3rd level smite only on crits.
   // Your chance to crit will then be 1 - (1 - 0.10) ^ 2 = 0.19 = 19%
   // To find the damage you multiply the chance to crit by all the EXTRA DAMAGE that you would get from the attack.
