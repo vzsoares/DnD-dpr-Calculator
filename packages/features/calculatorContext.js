@@ -43,13 +43,6 @@ function CalculatorContextProvider({ children }) {
         targetAC
       )
     );
-
-    setDisplayedAttackInfo({
-      damageFromDice: currentAttackData?.getAverageFromDice(),
-      damageFromBonus: currentAttackData?.getAverageFromBonus(),
-      damageFromCritFactor: currentAttackData?.getAverageFromCritFactor(),
-      totalAttackDamage: currentAttackData?.getAverageTotal(),
-    });
   }, [
     attackBonus,
     damageBonus,
@@ -61,6 +54,15 @@ function CalculatorContextProvider({ children }) {
     targetAC,
     name,
   ]);
+
+  useEffect(() => {
+    setDisplayedAttackInfo({
+      damageFromDice: currentAttackData?.getAverageFromDice(),
+      damageFromBonus: currentAttackData?.getAverageFromBonus(),
+      damageFromCritFactor: currentAttackData?.getAverageFromCritFactor(),
+      totalAttackDamage: currentAttackData?.getAverageTotal(),
+    });
+  }, [currentAttackData]);
 
   //functions
   function clearDisplayedData() {
