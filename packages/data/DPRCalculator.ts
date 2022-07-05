@@ -70,7 +70,7 @@ export default class Attack {
         new Die(
           this.damage_dice[index].sides,
           this.damage_dice[index].reroll,
-          this.damage_dice[index].minroll
+          this.damage_dice[index].minRoll
         )
       );
     }
@@ -116,7 +116,7 @@ export default class Attack {
         new Die(
           this.damage_dice[index].sides,
           this.damage_dice[index].reroll,
-          this.damage_dice[index].minroll
+          this.damage_dice[index].minRoll
         )
       );
     }
@@ -126,7 +126,7 @@ export default class Attack {
         new Die(
           this.crit_dice[index].sides,
           this.crit_dice[index].reroll,
-          this.crit_dice[index].minroll
+          this.crit_dice[index].minRoll
         )
       );
     }
@@ -320,7 +320,3 @@ function p_crit(crit_range: number, adv_mod: number): number {
 // console.log("      Damage From Bonus: " + my_attack.getAverageFromBonus());
 // console.log("Damage From Crit Factor: " + my_attack.getAverageFromCritFactor());
 // console.log("           Damage Total: " + my_attack.getAverageTotal());
-
-for (let index = 0; index < 20; index++) {
-  console.log(p_hit(10, index, 1));
-}
