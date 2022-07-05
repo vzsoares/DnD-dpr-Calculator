@@ -63,13 +63,16 @@ export default class Attack {
   // For example, if your chance to hit is 65% and you are attacking with a greatsword with advantage,
   // your average damage will be (1 - (1 - 0.65) ^ 2) * (2 * 3.5) = 6.1425
   getAverageFromDice() {
-    let tempdice : Die[] = []; // create empty array
+    let tempdice: Die[] = []; // create empty array
 
-    for (let index = 0; index < this.damage_dice.dice?.length; index++) {
-      tempdice.push(new Die(
-        this.damage_dice.dice[index].sides, 
-        this.damage_dice.dice[index].reroll,
-        this.damage_dice.dice[index].minroll));
+    for (let index = 0; index < this.damage_dice?.length; index++) {
+      tempdice.push(
+        new Die(
+          this.damage_dice[index].sides,
+          this.damage_dice[index].reroll,
+          this.damage_dice[index].minroll
+        )
+      );
     }
 
     let diceset = new DiceSet(tempdice);
@@ -105,21 +108,27 @@ export default class Attack {
   // the EXTRA DAMAGE of this attack would be (2 * 3.5 + 6 * 4.5) = 34
   // The final result returned will then be 0.19 * 34 = 6.46
   getAverageFromCritFactor() {
-    let tempdice : Die[] = []; // create empty array
+    let tempdice: Die[] = []; // create empty array
     let tempcritdice: Die[] = []; // create empty array
 
-    for (let index = 0; index < this.damage_dice.dice?.length; index++) {
-      tempdice.push(new Die(
-        this.damage_dice.dice[index].sides, 
-        this.damage_dice.dice[index].reroll,
-        this.damage_dice.dice[index].minroll));
+    for (let index = 0; index < this.damage_dice?.length; index++) {
+      tempdice.push(
+        new Die(
+          this.damage_dice[index].sides,
+          this.damage_dice[index].reroll,
+          this.damage_dice[index].minroll
+        )
+      );
     }
 
-    for (let index = 0; index < this.crit_dice.dice?.length; index++) {
-      tempcritdice.push(new Die(
-        this.crit_dice.dice[index].sides, 
-        this.crit_dice.dice[index].reroll,
-        this.crit_dice.dice[index].minroll));
+    for (let index = 0; index < this.crit_dice?.length; index++) {
+      tempcritdice.push(
+        new Die(
+          this.crit_dice[index].sides,
+          this.crit_dice[index].reroll,
+          this.crit_dice[index].minroll
+        )
+      );
     }
 
     let damage_diceset = new DiceSet(tempdice);
@@ -140,7 +149,6 @@ export default class Attack {
     );
   }
 }
-
 //--------------------------------//
 //--- CLASS ATTACK DESCRIPTION ---//
 //--------------------------------//
@@ -194,8 +202,7 @@ class DiceSet {
 
   constructor(
     dice: { sides: number; reroll: number; minRoll: number; id: number }[]
-  ) 
-  {
+  ) {
     this.dice = [];
     for (let i = 0; i < dice.length; i++) {
       this.dice.push(new Die(dice[i].sides, dice[i].reroll, dice[i].minRoll));
@@ -255,61 +262,61 @@ function p_crit(crit_range: number, adv_mod: number): number {
   return 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
 }
 
-//-------------------//
-//--- TEST SCRIPT ---//
-//-------------------//
-let my_attack = new Attack(
-    "Greatsword STR18 LVL 5",
-    7,
-    4,
-    new DiceSet([
-      {
-          "sides": 6,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967414633
-      },
-      {
-          "sides": 6,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967414867
-      }
-  ]),
-    new DiceSet([
-      {
-          "sides": 6,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967445367
-      },
-      {
-          "sides": 6,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967445501
-      },
-      {
-          "sides": 6,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967445678
-      },
-      {
-          "sides": 6,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967445828
-      },
-  ]),
-    1,
-    false,
-    20,
-    12
-)
+// //-------------------//
+// //--- TEST SCRIPT ---//
+// //-------------------//
+// let my_attack = new Attack(
+//     "Greatsword STR18 LVL 5",
+//     7,
+//     4,
+//     new DiceSet([
+//       {
+//           "sides": 6,
+//           "reroll": 0,
+//           "minRoll": 1,
+//           "id": 1654967414633
+//       },
+//       {
+//           "sides": 6,
+//           "reroll": 0,
+//           "minRoll": 1,
+//           "id": 1654967414867
+//       }
+//   ]),
+//     new DiceSet([
+//       {
+//           "sides": 6,
+//           "reroll": 0,
+//           "minRoll": 1,
+//           "id": 1654967445367
+//       },
+//       {
+//           "sides": 6,
+//           "reroll": 0,
+//           "minRoll": 1,
+//           "id": 1654967445501
+//       },
+//       {
+//           "sides": 6,
+//           "reroll": 0,
+//           "minRoll": 1,
+//           "id": 1654967445678
+//       },
+//       {
+//           "sides": 6,
+//           "reroll": 0,
+//           "minRoll": 1,
+//           "id": 1654967445828
+//       },
+//   ]),
+//     1,
+//     false,
+//     20,
+//     12
+// )
 
-console.log("\n          Chance to Hit: " + p_hit(12, 7, 1));
-console.log("       Damage From Dice: " + my_attack.getAverageFromDice());
-console.log("      Damage From Bonus: " + my_attack.getAverageFromBonus());
-console.log("Damage From Crit Factor: " + my_attack.getAverageFromCritFactor());
-console.log("           Damage Total: " + my_attack.getAverageTotal());
+// console.log("\n          Chance to Hit: " + p_hit(12, 7, 1));
+// console.log("       Damage From Dice: " + my_attack.getAverageFromDice());
+// console.log("      Damage From Bonus: " + my_attack.getAverageFromBonus());
+// console.log("Damage From Crit Factor: " + my_attack.getAverageFromCritFactor());
+// console.log("           Damage Total: " + my_attack.getAverageTotal());
