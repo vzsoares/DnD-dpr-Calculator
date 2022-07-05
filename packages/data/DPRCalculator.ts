@@ -251,8 +251,8 @@ function T(N: number) {
 // given the target's armor class, the attacker's attack bonus,
 // and the attack's advantage modifier.
 function p_hit(A: number, B: number, M = 1): number {
-  if (A >= B + 20) return 1 - (1 - 0.05) ** M;
-  else if (A <= B + 2) return 1 - (1 - 0.05) ** M;
+  if (A >= B + 20) {return 1 - (1 - 0.05) ** M;}
+  else if (A <= B + 2) return 1 - (1 - 0.95) ** M;
   return 1 - (1 - (21 + B - A) / 20) ** M;
 }
 
@@ -320,3 +320,7 @@ function p_crit(crit_range: number, adv_mod: number): number {
 // console.log("      Damage From Bonus: " + my_attack.getAverageFromBonus());
 // console.log("Damage From Crit Factor: " + my_attack.getAverageFromCritFactor());
 // console.log("           Damage Total: " + my_attack.getAverageTotal());
+
+for (let index = 0; index < 20; index++) {
+  console.log(p_hit(10, index, 1));
+}
