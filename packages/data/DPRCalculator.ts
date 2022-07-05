@@ -63,12 +63,23 @@ export default class Attack {
   // For example, if your chance to hit is 65% and you are attacking with a greatsword with advantage,
   // your average damage will be (1 - (1 - 0.65) ^ 2) * (2 * 3.5) = 6.1425
   getAverageFromDice() {
+    let tempdice : Die[] = []; // create empty array
+
+    for (let index = 0; index < this.damage_dice.dice?.length; index++) {
+      tempdice.push(new Die(
+        this.damage_dice.dice[index].sides, 
+        this.damage_dice.dice[index].reroll,
+        this.damage_dice.dice[index].minroll));
+    }
+
+    let diceset = new DiceSet(tempdice);
+
     return (
       p_hit(
         this.target_AC,
         this.getEffectiveAttackBonus(),
         this.advantage_modifier
-      ) * new DiceSet(this.damage_dice).getAverageRolls()
+      ) * diceset.getAverageRolls()
     );
   }
 
@@ -94,10 +105,29 @@ export default class Attack {
   // the EXTRA DAMAGE of this attack would be (2 * 3.5 + 6 * 4.5) = 34
   // The final result returned will then be 0.19 * 34 = 6.46
   getAverageFromCritFactor() {
+    let tempdice : Die[] = []; // create empty array
+    let tempcritdice: Die[] = []; // create empty array
+
+    for (let index = 0; index < this.damage_dice.dice?.length; index++) {
+      tempdice.push(new Die(
+        this.damage_dice.dice[index].sides, 
+        this.damage_dice.dice[index].reroll,
+        this.damage_dice.dice[index].minroll));
+    }
+
+    for (let index = 0; index < this.crit_dice.dice?.length; index++) {
+      tempcritdice.push(new Die(
+        this.crit_dice.dice[index].sides, 
+        this.crit_dice.dice[index].reroll,
+        this.crit_dice.dice[index].minroll));
+    }
+
+    let damage_diceset = new DiceSet(tempdice);
+    let crit_diceset = new DiceSet(tempcritdice);
+
     return (
       p_crit(this.crit_range, this.advantage_modifier) *
-      (new DiceSet(this.crit_dice).getAverageRolls() -
-        new DiceSet(this.damage_dice).getAverageRolls())
+      (crit_diceset.getAverageRolls() - damage_diceset.getAverageRolls())
     );
   }
 
@@ -164,7 +194,8 @@ class DiceSet {
 
   constructor(
     dice: { sides: number; reroll: number; minRoll: number; id: number }[]
-  ) {
+  ) 
+  {
     this.dice = [];
     for (let i = 0; i < dice.length; i++) {
       this.dice.push(new Die(dice[i].sides, dice[i].reroll, dice[i].minRoll));
@@ -227,10 +258,10 @@ function p_crit(crit_range: number, adv_mod: number): number {
 //-------------------//
 //--- TEST SCRIPT ---//
 //-------------------//
-/*let my_attack = new Attack(
-    "Holy Attack",
-    9,
-    5,
+let my_attack = new Attack(
+    "Greatsword STR18 LVL 5",
+    7,
+    4,
     new DiceSet([
       {
           "sides": 6,
@@ -270,63 +301,15 @@ function p_crit(crit_range: number, adv_mod: number): number {
           "minRoll": 1,
           "id": 1654967445828
       },
-      {
-          "sides": 8,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967455705
-      },
-      {
-          "sides": 8,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967455896
-      },
-      {
-          "sides": 8,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967456243
-      },
-      {
-          "sides": 8,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967456903
-      },
-      {
-          "sides": 8,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967457546
-      },
-      {
-          "sides": 8,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967457819
-      },
-      {
-          "sides": 8,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967458124
-      },
-      {
-          "sides": 8,
-          "reroll": 0,
-          "minRoll": 1,
-          "id": 1654967458564
-      }
   ]),
-    2,
-    true,
+    1,
+    false,
     20,
-    15
+    12
 )
 
-console.log("\n          Chance to Hit: " + p_hit(15, 4, 2));
+console.log("\n          Chance to Hit: " + p_hit(12, 7, 1));
 console.log("       Damage From Dice: " + my_attack.getAverageFromDice());
 console.log("      Damage From Bonus: " + my_attack.getAverageFromBonus());
 console.log("Damage From Crit Factor: " + my_attack.getAverageFromCritFactor());
-console.log("           Damage Total: " + my_attack.getAverageTotal());*/
+console.log("           Damage Total: " + my_attack.getAverageTotal());
