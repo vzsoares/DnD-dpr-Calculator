@@ -68,9 +68,9 @@ export default function DieSection() {
         if (element.id === objectID) {
           return {
             ...element,
-            sides: sides,
-            reroll: reroll,
-            minRoll: minRoll,
+            sides: Number(sides),
+            reroll: Number(reroll),
+            minRoll: Number(minRoll),
           };
         }
         return element;
