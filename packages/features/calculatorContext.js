@@ -57,10 +57,12 @@ function CalculatorContextProvider({ children }) {
 
   useEffect(() => {
     setDisplayedAttackInfo({
-      damageFromDice: currentAttackData?.getAverageFromDice(),
-      damageFromBonus: currentAttackData?.getAverageFromBonus(),
-      damageFromCritFactor: currentAttackData?.getAverageFromCritFactor(),
-      totalAttackDamage: currentAttackData?.getAverageTotal(),
+      damageFromDice: currentAttackData?.getAverageFromDice().toFixed(2),
+      damageFromBonus: currentAttackData?.getAverageFromBonus().toFixed(2),
+      damageFromCritFactor: currentAttackData
+        ?.getAverageFromCritFactor()
+        .toFixed(2),
+      totalAttackDamage: currentAttackData?.getAverageTotal().toFixed(2),
     });
   }, [currentAttackData]);
 
@@ -80,10 +82,13 @@ function CalculatorContextProvider({ children }) {
   const saveAttack = useCallback(() => {
     setAttacksList([
       ...attacksList,
-      { ...currentAttackData, id: new Date().getTime() },
+      [
+        { ...currentAttackData, id: new Date().getTime() },
+        { ...displayedAttackInfo },
+      ],
     ]);
     clearDisplayedData();
-  }, [attacksList, currentAttackData]);
+  }, [attacksList, currentAttackData, displayedAttackInfo]);
   //
 
   const contextData = useMemo(() => {
@@ -105,6 +110,7 @@ function CalculatorContextProvider({ children }) {
       targetAC,
       setTargetAC,
       advantageModifier,
+      attacksList,
       setAdvantageModifier,
       displayedAttackInfo,
       saveAttack,
@@ -121,6 +127,7 @@ function CalculatorContextProvider({ children }) {
     targetAC,
     advantageModifier,
     saveAttack,
+    attacksList,
   ]);
   return (
     <calculatorContext.Provider value={contextData}>

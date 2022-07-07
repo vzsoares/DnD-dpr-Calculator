@@ -2,16 +2,13 @@
 import React from "react";
 import { Grid, GridItem, Container, Flex } from "@chakra-ui/react";
 import AttackListItem from "../components/AttackListItem";
+import { useCalculatorContext } from "../features/calculatorContext";
 export default function AttacksListSection() {
-  const attackList = [
-    { name: "attack 1", dpr: "9.5" },
-    { name: "attack 2", dpr: "10.5" },
-    { name: "attack 3", dpr: "11.5" },
-  ];
+  const { attacksList } = useCalculatorContext();
   return (
     <Grid templateColumns='repeat(1, 1fr)' gap={6} maxW='678px'>
-      {attackList.map((e, i) => {
-        return <AttackListItem props={{ data: e }} key={i} />;
+      {attacksList.map((e, i) => {
+        return <AttackListItem props={e} key={i} />;
       })}
     </Grid>
   );
