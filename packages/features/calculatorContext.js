@@ -25,6 +25,7 @@ function CalculatorContextProvider({ children }) {
   const [currentAttackData, setCurrentAttackData] = useState();
   const [attacksList, setAttacksList] = useState([]);
   const [editingIndex, setEditingIndex] = useState("");
+
   //effects
   useEffect(() => {
     setCurrentAttackData(
@@ -87,6 +88,7 @@ function CalculatorContextProvider({ children }) {
     setCritRange("20-20");
     setTargetAC(12);
   }
+
   const startEditingAttack = useCallback((attack) => {
     setEditingIndex(attack.id);
 
@@ -100,6 +102,7 @@ function CalculatorContextProvider({ children }) {
     setName(attack.name);
     setTargetAC(attack.target_AC);
   }, []);
+
   const saveAttack = useCallback(() => {
     if (editingIndex > 0) {
       setAttacksList(
@@ -126,7 +129,15 @@ function CalculatorContextProvider({ children }) {
     ]);
     clearDisplayedData();
   }, [attacksList, currentAttackData, displayedAttackInfo, editingIndex]);
-  //
+
+  const deleteAttack = useCallback(
+    (attackID) => {
+      setAttacksList(attacksList.filter((e) => e[0].id !== attackID));
+      clearDisplayedData();
+      setEditingIndex(0);
+    },
+    [attacksList]
+  );
 
   const contextData = useMemo(() => {
     return {
@@ -153,6 +164,7 @@ function CalculatorContextProvider({ children }) {
       startEditingAttack,
       saveAttack,
       editingIndex,
+      deleteAttack,
     };
   }, [
     attackBonus,
@@ -169,6 +181,7 @@ function CalculatorContextProvider({ children }) {
     attacksList,
     startEditingAttack,
     editingIndex,
+    deleteAttack,
   ]);
   return (
     <calculatorContext.Provider value={contextData}>
