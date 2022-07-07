@@ -24,6 +24,8 @@ function CalculatorContextProvider({ children }) {
   const [displayedAttackInfo, setDisplayedAttackInfo] = useState({});
   const [currentAttackData, setCurrentAttackData] = useState();
   const [attacksList, setAttacksList] = useState([]);
+  const [editingIndex, setEditingIndex] = useState("");
+
   //effects
   useEffect(() => {
     setCurrentAttackData(
@@ -37,9 +39,17 @@ function CalculatorContextProvider({ children }) {
           ? 1
           : advantageModifier === "Advantage"
           ? 2
+          : typeof advantageModifier === "number"
+          ? advantageModifier
           : 3,
         gwmsharp,
-        critRange === "20-20" ? 20 : critRange === "19-20" ? 19 : 18,
+        critRange === "20-20"
+          ? 20
+          : critRange === "19-20"
+          ? 19
+          : typeof critRange === "number"
+          ? critRange
+          : 18,
         targetAC
       )
     );
@@ -57,10 +67,12 @@ function CalculatorContextProvider({ children }) {
 
   useEffect(() => {
     setDisplayedAttackInfo({
-      damageFromDice: currentAttackData?.getAverageFromDice(),
-      damageFromBonus: currentAttackData?.getAverageFromBonus(),
-      damageFromCritFactor: currentAttackData?.getAverageFromCritFactor(),
-      totalAttackDamage: currentAttackData?.getAverageTotal(),
+      damageFromDice: currentAttackData?.getAverageFromDice().toFixed(2),
+      damageFromBonus: currentAttackData?.getAverageFromBonus().toFixed(2),
+      damageFromCritFactor: currentAttackData
+        ?.getAverageFromCritFactor()
+        .toFixed(2),
+      totalAttackDamage: currentAttackData?.getAverageTotal().toFixed(2),
     });
   }, [currentAttackData]);
 
@@ -77,14 +89,55 @@ function CalculatorContextProvider({ children }) {
     setTargetAC(12);
   }
 
+  const startEditingAttack = useCallback((attack) => {
+    setEditingIndex(attack.id);
+
+    setAdvantageModifier(attack.advantage_modifier);
+    setAttackBonus(attack.attack_bonus);
+    setCritDiceList(attack.crit_dice);
+    setCritRange(attack.crit_range);
+    setDamageBonus(attack.damage_bonus);
+    setDamageDiceList(attack.damage_dice);
+    setGwmsharp(attack.gwmsharp);
+    setName(attack.name);
+    setTargetAC(attack.target_AC);
+  }, []);
+
   const saveAttack = useCallback(() => {
+    if (editingIndex > 0) {
+      setAttacksList(
+        attacksList.map((e) => {
+          if (e[0].id === editingIndex) {
+            return [
+              { ...e[0], ...currentAttackData },
+              { ...displayedAttackInfo },
+            ];
+          } else return e;
+        })
+      );
+      clearDisplayedData();
+      setEditingIndex(0);
+      return;
+    }
+
     setAttacksList([
       ...attacksList,
-      { ...currentAttackData, id: new Date().getTime() },
+      [
+        { ...currentAttackData, id: new Date().getTime() },
+        { ...displayedAttackInfo },
+      ],
     ]);
     clearDisplayedData();
-  }, [attacksList, currentAttackData]);
-  //
+  }, [attacksList, currentAttackData, displayedAttackInfo, editingIndex]);
+
+  const deleteAttack = useCallback(
+    (attackID) => {
+      setAttacksList(attacksList.filter((e) => e[0].id !== attackID));
+      clearDisplayedData();
+      setEditingIndex(0);
+    },
+    [attacksList]
+  );
 
   const contextData = useMemo(() => {
     return {
@@ -105,9 +158,13 @@ function CalculatorContextProvider({ children }) {
       targetAC,
       setTargetAC,
       advantageModifier,
+      attacksList,
       setAdvantageModifier,
       displayedAttackInfo,
+      startEditingAttack,
       saveAttack,
+      editingIndex,
+      deleteAttack,
     };
   }, [
     attackBonus,
@@ -121,6 +178,10 @@ function CalculatorContextProvider({ children }) {
     targetAC,
     advantageModifier,
     saveAttack,
+    attacksList,
+    startEditingAttack,
+    editingIndex,
+    deleteAttack,
   ]);
   return (
     <calculatorContext.Provider value={contextData}>
