@@ -26,6 +26,7 @@ function CalculatorContextProvider({ children }) {
   const [attacksList, setAttacksList] = useState([]);
   const [editingIndex, setEditingIndex] = useState("");
 
+  console.log(attacksList);
   //effects
   useEffect(() => {
     setCurrentAttackData(
