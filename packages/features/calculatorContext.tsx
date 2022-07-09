@@ -43,12 +43,12 @@ function CalculatorContextProvider({ children }) {
 
   useEffect(() => {
     setDisplayedAttackInfo({
-      damageFromDice: currentAttackData?.getAverageFromDice().toFixed(2),
-      damageFromBonus: currentAttackData?.getAverageFromBonus().toFixed(2),
+      damageFromDice: currentAttackData?.getDiceDPR().toFixed(2),
+      damageFromBonus: currentAttackData?.getDmgBonusDPR().toFixed(2),
       damageFromCritFactor: currentAttackData
-        ?.getAverageFromCritFactor()
+        ?.getAverageCritFactorDMG()
         .toFixed(2),
-      totalAttackDamage: currentAttackData?.getAverageTotal().toFixed(2),
+      totalAttackDamage: currentAttackData?.getDPR().toFixed(2),
     });
   }, [currentAttackData]);
 
