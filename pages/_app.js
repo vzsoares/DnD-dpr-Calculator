@@ -1,4 +1,4 @@
-import { CalculatorContextProvider } from "../packages/features/calculatorContext";
+import { CalculatorContextProvider } from "../packages/features/calculatorContext.tsx";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import "../styles/globals.css";

@@ -11,10 +11,10 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "@chakra-ui/react";
-import { useCalculatorContext } from "../features/calculatorContext.js";
+import { useCalculatorContext } from "../features/calculatorContext.tsx";
 
 export default function ArmorSection() {
-  const { setTargetAC, targetAC } = useCalculatorContext();
+  const { inputsState, updateInput } = useCalculatorContext();
 
   return (
     <Box>
@@ -22,8 +22,8 @@ export default function ArmorSection() {
       <NumberInput
         size={"lg"}
         maxW='468px'
-        value={targetAC}
-        onChange={(e) => setTargetAC(e)}
+        value={inputsState.target_AC}
+        onChange={(e) => updateInput(Number(e), "target_AC")}
       >
         <NumberInputField fontSize={"2.5rem"} fontWeight='bold' />
         <NumberInputStepper>
