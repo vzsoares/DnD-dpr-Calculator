@@ -29,8 +29,8 @@ function CalculatorContextProvider({ children }) {
     setCurrentAttackData(
       new DPRCalculator(
         inputsState.name,
-        inputsState.damage_bonus,
         inputsState.attack_bonus,
+        inputsState.damage_bonus,
         inputsState.damage_dice,
         inputsState.crit_dice,
         inputsState.advantage_modifier,
