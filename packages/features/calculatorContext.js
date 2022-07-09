@@ -5,11 +5,28 @@ import {
   useState,
   useEffect,
   useCallback,
+  useReducer,
 } from "react";
 import DPRCalculator from "../data/DPRCalculator.ts";
 
+import inputsReducer, {
+  initialState,
+} from "../features/DPRCalculatorReducer.ts";
+
 const calculatorContext = createContext({});
 function CalculatorContextProvider({ children }) {
+  //
+  const [inputsState, dispatchInputs] = useReducer(inputsReducer, initialState);
+  console.log(inputsState);
+  function updateInput(payload, key) {
+    console.log(payload, key);
+    dispatchInputs({
+      type: "update",
+      payload,
+      key,
+    });
+  }
+  //
   // class essential vars
   const [name, setName] = useState("");
   const [attackBonus, setAttackBonus] = useState(0);
@@ -25,8 +42,6 @@ function CalculatorContextProvider({ children }) {
   const [currentAttackData, setCurrentAttackData] = useState();
   const [attacksList, setAttacksList] = useState([]);
   const [editingIndex, setEditingIndex] = useState("");
-
-  console.log(attacksList);
   //effects
   useEffect(() => {
     setCurrentAttackData(
@@ -166,6 +181,9 @@ function CalculatorContextProvider({ children }) {
       saveAttack,
       editingIndex,
       deleteAttack,
+      inputsState,
+      dispatchInputs,
+      updateInput,
     };
   }, [
     attackBonus,
@@ -183,6 +201,8 @@ function CalculatorContextProvider({ children }) {
     startEditingAttack,
     editingIndex,
     deleteAttack,
+    inputsState,
+    dispatchInputs,
   ]);
   return (
     <calculatorContext.Provider value={contextData}>

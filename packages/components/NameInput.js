@@ -3,14 +3,14 @@ import { Input } from "@chakra-ui/react";
 import { useCalculatorContext } from "../features/calculatorContext.js";
 
 export default function NameInput() {
-  const { name, setName } = useCalculatorContext();
+  const { updateInput, inputsState } = useCalculatorContext();
   return (
     <>
       <Input
         maxW='400px'
         placeholder='Attack Name'
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={inputsState.name}
+        onChange={(e) => updateInput(e.target.value, "name")}
       />
     </>
   );

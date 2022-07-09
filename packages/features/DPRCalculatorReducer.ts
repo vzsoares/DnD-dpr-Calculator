@@ -17,6 +17,21 @@ interface SavedAttackData {
   totalAttackDamage: number;
 }
 
+interface AppStates {
+  displayedAttackInfo: attackResults;
+  currentAttackData: Attack | null;
+  attacksList: [ClassStates, SavedAttackData][];
+  editingIndex: number;
+}
+
+interface State {}
+
+interface Action {
+  type: string;
+  payload?: string;
+  key?: string;
+}
+
 interface ClassStates {
   name: string;
   damage_bonus: number;
@@ -29,67 +44,28 @@ interface ClassStates {
   target_AC: number;
 }
 
-interface AppStates {
-  displayedAttackInfo: attackResults;
-  currentAttackData: Attack | null;
-  attacksList: [ClassStates, SavedAttackData][];
-  editingIndex: number;
-}
-
-interface State {
-  class: ClassStates;
-  app: AppStates;
-}
-
-interface Action {
-  type: string;
-  payload?: string;
-  key?: string;
-}
-
-export const initialState: State = {
-  class: {
-    name: "",
-    damage_bonus: 0,
-    attack_bonus: 0,
-    crit_dice: [],
-    damage_dice: [],
-    advantage_modifier: 1,
-    gwmsharp: false,
-    crit_range: 20,
-    target_AC: 12,
-  },
-  app: {
-    displayedAttackInfo: {
-      damageFromBonus: 0,
-      damageFromCritFactor: 0,
-      damageFromDice: 0,
-      totalAttackDamage: 0,
-    },
-    currentAttackData: null,
-    attacksList: [],
-    editingIndex: 0,
-  },
+export const initialState: ClassStates = {
+  name: "",
+  damage_bonus: 0,
+  attack_bonus: 0,
+  crit_dice: [],
+  damage_dice: [],
+  advantage_modifier: 1,
+  gwmsharp: false,
+  crit_range: 20,
+  target_AC: 12,
 };
 
-export default function calculatorReducer(state: State, action: Action) {
+export default function inputsReducer(state: ClassStates, action: Action) {
   const { type, key, payload } = action;
 
   switch (type) {
-    case "inputs":
+    case "update":
       if (key)
         return {
           ...state,
           [key]: payload,
         };
-
-    case "app":
-      if (key)
-        return {
-          ...state,
-          [key]: payload,
-        };
-
     case "reset":
       return initialState;
     default:

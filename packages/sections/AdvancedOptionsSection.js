@@ -4,24 +4,27 @@ import { Flex } from "@chakra-ui/react";
 import { useCalculatorContext } from "../features/calculatorContext.js";
 
 export default function AdvancedOptionsSection() {
-  const { critRange, setCritRange, advantageModifier, setAdvantageModifier } =
-    useCalculatorContext();
+  const { updateInput, inputsState } = useCalculatorContext();
   return (
     <Flex gap='5'>
       <SelectInput
         props={{
-          values: ["20-20", "19-20", "18-20"],
           title: "Crit Range",
-          value: critRange,
-          setValue: setCritRange,
+          displayValues: ["20-20", "19-20", "18-20"],
+          values: [20, 19, 18],
+          key: "crit_range",
+          updateInput,
+          inputsState,
         }}
       />
       <SelectInput
         props={{
-          values: ["Normal", "Advantage", "Elven accuracy"],
           title: "Advantage Modifier",
-          value: advantageModifier,
-          setValue: setAdvantageModifier,
+          displayValues: ["Normal", "Advantage", "Elven accuracy"],
+          values: [1, 2, 3],
+          key: "advantage_modifier",
+          updateInput,
+          inputsState,
         }}
       />
     </Flex>
