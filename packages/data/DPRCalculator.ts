@@ -11,15 +11,15 @@
 */
 
 export default class Attack {
-  name: string; // custom name for the attack
-  attack_bonus: number; // attack roll bonus, also known as hit/dc
-  damage_bonus: number; // damage roll bonus, for example bonus for strength or magic items.
-  damage_dice: DiceSet; // array of die, for example 2d6 for a greatsword.
-  crit_dice: DiceSet; // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
+  name: string;               // custom name for the attack
+  attack_bonus: number;       // attack roll bonus, also known as hit/dc
+  damage_bonus: number;       // damage roll bonus, for example bonus for strength or magic items.
+  damage_dice: DiceSet;       // array of die, for example 2d6 for a greatsword.
+  crit_dice: DiceSet;         // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
   advantage_modifier: number; // 1 for normal, 2 for advantage and 3 for elven accuracy
-  gwmsharp: boolean; // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus.
-  crit_range: number; // 20 for crit on 20 only. 19 for crit range of 19-20.
-  target_AC: number; // target's armor class.
+  gwmsharp: boolean;          // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus.
+  crit_range: number;         // 20 for crit on 20 only. 19 for crit range of 19-20.
+  target_AC: number;          // target's armor class.
 
   constructor(
     name: string,
@@ -43,7 +43,7 @@ export default class Attack {
     this.target_AC = target_AC;
   }
 
-  // Calculates the effective attack bonus to account for great weapon master (or sharpshooter).
+  // Returns the effective attack bonus to account for great weapon master (or sharpshooter).
   getEffectiveAttackBonus() {
     if (this.gwmsharp == true) {
       return this.attack_bonus - 5;
@@ -51,7 +51,7 @@ export default class Attack {
     return this.attack_bonus;
   }
 
-  // Calculates the effective damage bonus to account for great weapon master (or sharpshooter).
+  // Returns the effective damage bonus to account for great weapon master (or sharpshooter).
   getEffectiveDamageBonus() {
     if (this.gwmsharp == true) {
       return this.damage_bonus + 10;
@@ -59,10 +59,8 @@ export default class Attack {
     return this.damage_bonus;
   }
 
-  // Returns the average damage from dice only ACCOUNTING FOR CHANCE TO HIT.
-  // For example, if your chance to hit is 65% and you are attacking with a greatsword with advantage,
-  // your average damage will be (1 - (1 - 0.65) ^ 2) * (2 * 3.5) = 6.1425
-  getAverageFromDice() {
+  // Returns the average damage from dice rolls on normal hit.
+  getAverageDiceDMG() {
     let tempdice: Die[] = []; // create empty array
 
     for (let index = 0; index < this.damage_dice?.length; index++) {
@@ -76,38 +74,50 @@ export default class Attack {
     }
 
     let diceset = new DiceSet(tempdice);
-
-    return (
-      p_hit(
-        this.target_AC,
-        this.getEffectiveAttackBonus(),
-        this.advantage_modifier
-      ) * diceset.getAverageRolls()
-    );
+    return diceset.getAverageRolls();
   }
 
-  // Calculates the average damage from bonus only, ACCOUNTING FOR CHANCE TO HIT.
+  // Returns the average damage from dice rolls on a critical hit.
+  getAverageCritDMG() {
+    let tempcritdice: Die[] = []; // create empty array
+
+    for (let index = 0; index < this.crit_dice?.length; index++) {
+      tempcritdice.push(
+        new Die(
+          this.crit_dice[index].sides,
+          this.crit_dice[index].reroll,
+          this.crit_dice[index].minRoll
+        )
+      );
+    }
+
+    let crit_diceset = new DiceSet(tempcritdice);
+    return crit_diceset.getAverageRolls();
+  }
+
+  // Returns the average damage from dice only ACCOUNTING FOR CHANCE TO HIT.
+  // For example, if your chance to hit is 65% and you are attacking with a greatsword with advantage,
+  // your average damage will be (1 - (1 - 0.65) ^ 2) * (2 * 3.5) = 6.1425
+  getDiceDPR() {
+    return this.getAverageDiceDMG() * p_hit(this.target_AC, this.getEffectiveAttackBonus(), this.advantage_modifier);
+  }
+
+  // Returns the average damage from bonus only, ACCOUNTING FOR CHANCE TO HIT.
   // For example if chance to hit is 65% and you have a damage bonus of 5 and you are attacking with elven accuracy,
   // your damage will be (1 - (1 - 0.65) ^ 3) * 5 = 4.785625
-  getAverageFromBonus() {
-    return (
-      p_hit(
-        this.target_AC,
-        this.getEffectiveAttackBonus(),
-        this.advantage_modifier
-      ) * this.getEffectiveDamageBonus()
-    );
+  getDmgBonusDPR() {
+    return this.getEffectiveDamageBonus() * p_hit(this.target_AC, this.getEffectiveAttackBonus(), this.advantage_modifier);
   }
 
-  // Returns the average damage PER TURN derived from critical hits.
+  // Returns the average damage PER ATTACK derived from critical hits.
   // THIS IS NOT A CALCULATION OF THE AVERAGE DAMAGE DEALT BY A CRITICAL HIT.
-  // For example if chance to hit is 65%, you are attacking with a greatsword, you have advantage,
+  // For example, if chance to hit is 65%, you are attacking with a greatsword, you have advantage,
   // you crit on 19-20, and you use 3rd level smite only on crits.
   // Your chance to crit will then be 1 - (1 - 0.10) ^ 2 = 0.19 = 19%
   // To find the damage you multiply the chance to crit by all the EXTRA DAMAGE that you would get from the attack.
   // the EXTRA DAMAGE of this attack would be (2 * 3.5 + 6 * 4.5) = 34
   // The final result returned will then be 0.19 * 34 = 6.46
-  getAverageFromCritFactor() {
+  getAverageCritFactorDMG() {
     let tempdice: Die[] = []; // create empty array
     let tempcritdice: Die[] = []; // create empty array
 
@@ -140,20 +150,36 @@ export default class Attack {
     );
   }
 
-  // Returns the average damage dealt by the attack accounting for average dice rolls, bonus, critical hits, and change to hit
-  getAverageTotal() {
+  // Returns the average damage dealt by the attack on a normal hit.
+  getAverageDMG() {
     return (
-      this.getAverageFromDice() +
-      this.getAverageFromBonus() +
-      this.getAverageFromCritFactor()
+      this.getAverageDiceDMG() +
+      this.getAverageBonusDMG()
+    );
+  }
+
+  // Returns the average damage dealt by the attack on a critical hit.
+  getAverageCriticalDMG () {
+    return this.getAverageCritDMG + this.getEffectiveDamageBonus();
+  }
+
+  // Returns the average damage per turn dealt by this attack
+  getDPR() {
+    return (
+      this.getDiceDPR() +
+      this.getDmgBonusDPR() + 
+      this.getAverageCritFactorDMG()
     );
   }
 }
-//--------------------------------//
-//--- CLASS ATTACK DESCRIPTION ---//
-//--------------------------------//
+
+
+
+//-----------------------------//
+//--- CLASS DIE DESCRIPTION ---//
+//-----------------------------//
 /*
-    This class is used to instantiate DieRoll objects,
+    This class is used to instantiate Die objects,
     which represent a single dice roll with along with
     modifiers for rerolling and minimum rolls.
     NOTE: Rerolling more than once is not supported.
@@ -192,10 +218,16 @@ class Die {
       this.sides
     );
   }
-  getSides(): number {
-    return this.sides;
-  }
 }
+
+
+
+//---------------------------------//
+//--- CLASS DiceSet DESCRIPTION ---//
+//---------------------------------//
+/*
+    This class represents a collection of Die Objects
+*/
 
 class DiceSet {
   dice: Die[];
@@ -209,7 +241,8 @@ class DiceSet {
     }
   }
 
-  getAverageRolls(): number {
+  // Returns the average total from the dice set rolls
+  getAverageTotal(): number {
     let total = 0;
     for (let i = 0; i < this.dice.length; i++) {
       total += this.dice[i].getAverageRoll();
@@ -217,14 +250,17 @@ class DiceSet {
     return total;
   }
 
+  // Returns a Die object from the DiceSet given an index.
   getDie(N: number): Die {
     return this.dice[N];
   }
 
+  // Adds a Die object to the DiceSet.
   addDie(die: Die): void {
     this.dice.push(die);
   }
 
+  // Returns the the number of dice in the DiceSet.
   length() {
     return this.dice.length;
   }
@@ -234,6 +270,7 @@ class DiceSet {
 //--- HELPER FUNCTIONS ---//
 //------------------------//
 
+// Returns a DiceSet containing double the amount of dice of the parameter passed in the function call.
 function calculateDefaultCritDice(diceset: DiceSet): DiceSet {
   let dice: number[] = [];
   for (let i = 0; i < diceset.length() * 2; i++) {
