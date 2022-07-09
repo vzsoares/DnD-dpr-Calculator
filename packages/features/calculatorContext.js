@@ -17,9 +17,7 @@ const calculatorContext = createContext({});
 function CalculatorContextProvider({ children }) {
   //
   const [inputsState, dispatchInputs] = useReducer(inputsReducer, initialState);
-  console.log(inputsState);
   function updateInput(payload, key) {
-    console.log(payload, key);
     dispatchInputs({
       type: "update",
       payload,
@@ -27,16 +25,6 @@ function CalculatorContextProvider({ children }) {
     });
   }
   //
-  // class essential vars
-  const [name, setName] = useState("");
-  const [attackBonus, setAttackBonus] = useState(0);
-  const [damageBonus, setDamageBonus] = useState(0);
-  const [damageDiceList, setDamageDiceList] = useState([]);
-  const [critDiceList, setCritDiceList] = useState([]);
-  const [advantageModifier, setAdvantageModifier] = useState("Normal");
-  const [gwmsharp, setGwmsharp] = useState(false);
-  const [critRange, setCritRange] = useState("20-20");
-  const [targetAC, setTargetAC] = useState(12);
   // other vars
   const [displayedAttackInfo, setDisplayedAttackInfo] = useState({});
   const [currentAttackData, setCurrentAttackData] = useState();
@@ -46,40 +34,18 @@ function CalculatorContextProvider({ children }) {
   useEffect(() => {
     setCurrentAttackData(
       new DPRCalculator(
-        name,
-        Number(attackBonus),
-        Number(damageBonus),
-        damageDiceList,
-        critDiceList,
-        advantageModifier === "Normal"
-          ? 1
-          : advantageModifier === "Advantage"
-          ? 2
-          : typeof advantageModifier === "number"
-          ? advantageModifier
-          : 3,
-        gwmsharp,
-        critRange === "20-20"
-          ? 20
-          : critRange === "19-20"
-          ? 19
-          : typeof critRange === "number"
-          ? critRange
-          : 18,
-        targetAC
+        inputsState.name,
+        inputsState.damage_bonus,
+        inputsState.attack_bonus,
+        inputsState.damage_dice,
+        inputsState.crit_dice,
+        inputsState.advantage_modifier,
+        inputsState.gwmsharp,
+        inputsState.crit_range,
+        inputsState.target_AC
       )
     );
-  }, [
-    attackBonus,
-    damageBonus,
-    damageDiceList,
-    critDiceList,
-    advantageModifier,
-    gwmsharp,
-    critRange,
-    targetAC,
-    name,
-  ]);
+  }, [inputsState]);
 
   useEffect(() => {
     setDisplayedAttackInfo({
@@ -94,15 +60,9 @@ function CalculatorContextProvider({ children }) {
 
   //functions
   function clearDisplayedData() {
-    setName("");
-    setAttackBonus(0);
-    setDamageBonus(0);
-    setDamageDiceList([]);
-    setCritDiceList([]);
-    setAdvantageModifier("Normal");
-    setGwmsharp(false);
-    setCritRange("20-20");
-    setTargetAC(12);
+    dispatchInputs({
+      type: "reset",
+    });
   }
 
   const startEditingAttack = useCallback((attack) => {
@@ -117,6 +77,12 @@ function CalculatorContextProvider({ children }) {
     setGwmsharp(attack.gwmsharp);
     setName(attack.name);
     setTargetAC(attack.target_AC);
+
+    dispatchInputs({
+      type: "update",
+      payload,
+      key,
+    });
   }, []);
 
   const saveAttack = useCallback(() => {
@@ -157,52 +123,23 @@ function CalculatorContextProvider({ children }) {
 
   const contextData = useMemo(() => {
     return {
-      attackBonus,
-      setAttackBonus,
-      gwmsharp,
-      setGwmsharp,
-      damageBonus,
-      setDamageBonus,
-      critDiceList,
-      setCritDiceList,
-      critRange,
-      setCritRange,
-      name,
-      setName,
-      damageDiceList,
-      setDamageDiceList,
-      targetAC,
-      setTargetAC,
-      advantageModifier,
       attacksList,
-      setAdvantageModifier,
       displayedAttackInfo,
       startEditingAttack,
       saveAttack,
       editingIndex,
       deleteAttack,
       inputsState,
-      dispatchInputs,
       updateInput,
     };
   }, [
-    attackBonus,
-    gwmsharp,
     displayedAttackInfo,
-    damageBonus,
-    critDiceList,
-    critRange,
-    name,
-    damageDiceList,
-    targetAC,
-    advantageModifier,
     saveAttack,
     attacksList,
     startEditingAttack,
     editingIndex,
     deleteAttack,
     inputsState,
-    dispatchInputs,
   ]);
   return (
     <calculatorContext.Provider value={contextData}>

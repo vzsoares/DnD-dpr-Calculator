@@ -288,8 +288,9 @@ function T(N: number) {
 // given the target's armor class, the attacker's attack bonus,
 // and the attack's advantage modifier.
 function p_hit(A: number, B: number, M = 1): number {
-  if (A >= B + 20) {return 1 - (1 - 0.05) ** M;}
-  else if (A <= B + 2) return 1 - (1 - 0.95) ** M;
+  if (A >= B + 20) {
+    return 1 - (1 - 0.05) ** M;
+  } else if (A <= B + 2) return 1 - (1 - 0.95) ** M;
   return 1 - (1 - (21 + B - A) / 20) ** M;
 }
 

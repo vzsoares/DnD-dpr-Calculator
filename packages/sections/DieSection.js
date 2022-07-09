@@ -6,11 +6,12 @@ import { Grid, Heading, Box, Flex, Switch, Button } from "@chakra-ui/react";
 import { useCalculatorContext } from "../features/calculatorContext.js";
 
 export default function DieSection() {
-  const { damageDiceList, setDamageDiceList, critDiceList, setCritDiceList } =
-    useCalculatorContext();
+  const { updateInput, inputsState } = useCalculatorContext();
 
   const [switchState, setSwitchState] = useState(false);
-  const [displayedDiceList, setDisplayedDiceList] = useState(damageDiceList);
+  const [displayedDiceList, setDisplayedDiceList] = useState(
+    inputsState.damage_dice
+  );
   const [editingIndex, setEditingIndex] = useState(-1);
 
   const [sides, setSides] = useState(1);
@@ -20,11 +21,13 @@ export default function DieSection() {
   useEffect(() => {
     // setDisplayedDiceList(
     //   !switchState
-    //     ? damageDiceList.sort((a, b) => a.sides - b.sides)
-    //     : critDiceList.sort((a, b) => a.sides - b.sides)
+    //     ? inputsState.damage_dice.sort((a, b) => a.sides - b.sides)
+    //     : inputsState.crit_dice.sort((a, b) => a.sides - b.sides)
     // );
-    setDisplayedDiceList(!switchState ? damageDiceList : critDiceList);
-  }, [damageDiceList, critDiceList, switchState]);
+    setDisplayedDiceList(
+      !switchState ? inputsState.damage_dice : inputsState.crit_dice
+    );
+  }, [inputsState.damage_dice, inputsState.crit_dice, switchState]);
 
   const dieProperties = [
     {
@@ -77,9 +80,9 @@ export default function DieSection() {
       });
     };
     if (!switchState) {
-      setDamageDiceList(saveLogic(damageDiceList));
+      updateInput(saveLogic(inputsState.damage_dice));
     } else if (switchState) {
-      setCritDiceList(saveLogic(critDiceList));
+      updateInput(saveLogic(inputsState.crit_dice), "crit_dice");
     }
     setEditingIndex(-1);
   }
@@ -92,12 +95,13 @@ export default function DieSection() {
     };
 
     if (!switchState) {
-      setDamageDiceList(saveLogic(damageDiceList));
+      updateInput(saveLogic(inputsState.damage_dice), "damage_dice");
     } else if (switchState) {
-      setCritDiceList(saveLogic(critDiceList));
+      updateInput(saveLogic(inputsState.crit_dice), "crit_dice");
     }
     setEditingIndex(-1);
   }
+
   return (
     <>
       <Grid
@@ -116,24 +120,30 @@ export default function DieSection() {
                     value: element,
                     func: () =>
                       !switchState
-                        ? setDamageDiceList([
-                            ...damageDiceList,
-                            {
-                              sides: element,
-                              reroll: 0,
-                              minRoll: 1,
-                              id: getUniqueId(),
-                            },
-                          ])
-                        : setCritDiceList([
-                            ...critDiceList,
-                            {
-                              sides: element,
-                              reroll: 0,
-                              minRoll: 1,
-                              id: getUniqueId(),
-                            },
-                          ]),
+                        ? updateInput(
+                            [
+                              ...inputsState.damage_dice,
+                              {
+                                sides: element,
+                                reroll: 0,
+                                minRoll: 1,
+                                id: getUniqueId(),
+                              },
+                            ],
+                            "damage_dice"
+                          )
+                        : updateInput(
+                            [
+                              ...inputsState.crit_dice,
+                              {
+                                sides: element,
+                                reroll: 0,
+                                minRoll: 1,
+                                id: getUniqueId(),
+                              },
+                            ],
+                            "crit_dice"
+                          ),
                   }}
                 />
               );

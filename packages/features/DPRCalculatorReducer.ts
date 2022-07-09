@@ -28,7 +28,7 @@ interface State {}
 
 interface Action {
   type: string;
-  payload?: string;
+  payload?: string | ClassStates;
   key?: string;
 }
 
@@ -36,8 +36,8 @@ interface ClassStates {
   name: string;
   damage_bonus: number;
   attack_bonus: number;
-  crit_dice: dice[];
   damage_dice: dice[];
+  crit_dice: dice[];
   advantage_modifier: 1 | 2 | 3;
   gwmsharp: boolean;
   crit_range: 20 | 19 | 18;

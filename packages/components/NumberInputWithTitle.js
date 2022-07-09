@@ -16,6 +16,7 @@ export default function NumberInputWithTitle({
     setValue,
     justify,
     size,
+    key,
     flexDir = "column",
     font = "1.5rem",
     disabled = false,
@@ -29,7 +30,7 @@ export default function NumberInputWithTitle({
           isDisabled={disabled}
           maxW='90px'
           value={value}
-          onChange={(e) => setValue(e)}
+          onChange={(e) => setValue(Number(e), key)}
           size={size}
         >
           <NumberInputField />
