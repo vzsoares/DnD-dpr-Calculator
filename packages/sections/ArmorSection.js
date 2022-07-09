@@ -11,7 +11,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
 } from "@chakra-ui/react";
-import { useCalculatorContext } from "../features/calculatorContext.js";
+import { useCalculatorContext } from "../features/calculatorContext.tsx";
 
 export default function ArmorSection() {
   const { inputsState, updateInput } = useCalculatorContext();

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import SingleDie from "../components/SingleDie";
 import NumberInputWithTitle from "../components/NumberInputWithTitle";
 import { Grid, Heading, Box, Flex, Switch, Button } from "@chakra-ui/react";
-import { useCalculatorContext } from "../features/calculatorContext.js";
+import { useCalculatorContext } from "../features/calculatorContext.tsx";
 
 export default function DieSection() {
   const { updateInput, inputsState } = useCalculatorContext();

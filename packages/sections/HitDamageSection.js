@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useCalculatorContext } from "../features/calculatorContext.js";
+import { useCalculatorContext } from "../features/calculatorContext.tsx";
 import NumberInputWithTitle from "../components/NumberInputWithTitle";
 import SharpShooterCheckBox from "../components/SharpShooterCheckBox";
 import { Flex } from "@chakra-ui/react";

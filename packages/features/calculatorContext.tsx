@@ -1,4 +1,4 @@
-import {
+import React, {
   createContext,
   useContext,
   useMemo,
@@ -7,26 +7,20 @@ import {
   useCallback,
   useReducer,
 } from "react";
-import DPRCalculator from "../data/DPRCalculator.ts";
 
-import inputsReducer, {
-  initialState,
-} from "../features/DPRCalculatorReducer.ts";
+import { ClassStates, attackResults } from "../types";
+
+// @ts-ignore
+import DPRCalculator from "../data/DPRCalculator.ts";
+// @ts-ignore
+import inputsReducer, { initialState } from "./DPRCalculatorReducer.ts";
 
 const calculatorContext = createContext({});
+
 function CalculatorContextProvider({ children }) {
-  //
   const [inputsState, dispatchInputs] = useReducer(inputsReducer, initialState);
-  function updateInput(payload, key) {
-    dispatchInputs({
-      type: "update",
-      payload,
-      key,
-    });
-  }
-  //
   // other vars
-  const [displayedAttackInfo, setDisplayedAttackInfo] = useState({});
+  const [displayedAttackInfo, setDisplayedAttackInfo] = useState();
   const [currentAttackData, setCurrentAttackData] = useState();
   const [attacksList, setAttacksList] = useState([]);
   const [editingIndex, setEditingIndex] = useState("");
@@ -65,28 +59,29 @@ function CalculatorContextProvider({ children }) {
     });
   }
 
-  const startEditingAttack = useCallback((attack) => {
-    setEditingIndex(attack.id);
-
-    setAdvantageModifier(attack.advantage_modifier);
-    setAttackBonus(attack.attack_bonus);
-    setCritDiceList(attack.crit_dice);
-    setCritRange(attack.crit_range);
-    setDamageBonus(attack.damage_bonus);
-    setDamageDiceList(attack.damage_dice);
-    setGwmsharp(attack.gwmsharp);
-    setName(attack.name);
-    setTargetAC(attack.target_AC);
-
+  function updateInput(payload: string, key: string) {
     dispatchInputs({
       type: "update",
       payload,
       key,
     });
+  }
+
+  const startEditingAttack = useCallback((attack) => {
+    setEditingIndex(attack.id);
+
+    Object.entries(attack).forEach((a) =>
+      dispatchInputs({
+        type: "update",
+        payload: a[1],
+        key: a[0],
+      })
+    );
   }, []);
 
   const saveAttack = useCallback(() => {
     if (editingIndex > 0) {
+      // EDIT ATTACK
       setAttacksList(
         attacksList.map((e) => {
           if (e[0].id === editingIndex) {
@@ -101,7 +96,7 @@ function CalculatorContextProvider({ children }) {
       setEditingIndex(0);
       return;
     }
-
+    // SAVE NEW ATTACK
     setAttacksList([
       ...attacksList,
       [
@@ -125,21 +120,21 @@ function CalculatorContextProvider({ children }) {
     return {
       attacksList,
       displayedAttackInfo,
-      startEditingAttack,
-      saveAttack,
       editingIndex,
-      deleteAttack,
       inputsState,
       updateInput,
+      startEditingAttack,
+      saveAttack,
+      deleteAttack,
     };
   }, [
-    displayedAttackInfo,
-    saveAttack,
     attacksList,
-    startEditingAttack,
+    displayedAttackInfo,
     editingIndex,
-    deleteAttack,
     inputsState,
+    saveAttack,
+    startEditingAttack,
+    deleteAttack,
   ]);
   return (
     <calculatorContext.Provider value={contextData}>

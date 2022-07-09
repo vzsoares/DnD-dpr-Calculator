@@ -1,7 +1,7 @@
 // @ts-nocheck
 import SelectInput from "../components/SelectInput";
 import { Flex } from "@chakra-ui/react";
-import { useCalculatorContext } from "../features/calculatorContext.js";
+import { useCalculatorContext } from "../features/calculatorContext.tsx";
 
 export default function AdvancedOptionsSection() {
   const { updateInput, inputsState } = useCalculatorContext();

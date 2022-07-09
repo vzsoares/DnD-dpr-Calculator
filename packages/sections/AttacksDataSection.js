@@ -1,6 +1,6 @@
 import { Heading, Box } from "@chakra-ui/react";
 import AttackInfoTable from "../components/AttackInfoTable";
-import { useCalculatorContext } from "../features/calculatorContext.js";
+import { useCalculatorContext } from "../features/calculatorContext.tsx";
 
 export default function AttackSection() {
   const { displayedAttackInfo, attacksList } = useCalculatorContext();

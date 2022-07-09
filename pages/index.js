@@ -1,4 +1,3 @@
-import { useCalculatorContext } from "../packages/features/calculatorContext";
 import DieSection from "../packages/sections/DieSection";
 import HitDamageSection from "../packages/sections/HitDamageSection";
 import AdvancedOptionsSection from "../packages/sections/AdvancedOptionsSection";
