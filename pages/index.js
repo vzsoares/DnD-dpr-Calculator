@@ -8,6 +8,7 @@ import AttacksDataSection from "../packages/sections/AttacksDataSection";
 import AttacksListSection from "../packages/sections/AttacksListSection";
 import NameInput from "../packages/components/NameInput";
 import { Box, Flex } from "@chakra-ui/react";
+
 export default function Home() {
   return (
     <Box maxW='998px' margin='0 auto'>

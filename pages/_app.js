@@ -2,13 +2,21 @@ import { CalculatorContextProvider } from "../packages/features/calculatorContex
 import { ChakraProvider, Box } from "@chakra-ui/react";
 
 import "../styles/globals.css";
+import NavBar from "../packages/components/NavBar.js";
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
       {/* @ts-ignore */}
       <CalculatorContextProvider>
-        <Box padding='0.5rem'>
+        <Box>
+          <NavBar />
+        </Box>
+        <Box
+          padding='0.5rem'
+          minH='100vh'
+          bgImg="url('/img/background_texture.png')"
+        >
           <Component {...pageProps} />
         </Box>
       </CalculatorContextProvider>
