@@ -7,7 +7,7 @@ export default function AttacksListSection() {
   const { attacksList, startEditingAttack, editingIndex, deleteAttack } =
     useCalculatorContext();
   return (
-    <Grid templateColumns='repeat(1, 1fr)' gap={6} maxW='678px'>
+    <Flex wrap='wrap' justifyContent='space-between'>
       {attacksList.map((e, i) => {
         return (
           <AttackListItem
@@ -16,6 +16,6 @@ export default function AttacksListSection() {
           />
         );
       })}
-    </Grid>
+    </Flex>
   );
 }
