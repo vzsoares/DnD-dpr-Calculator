@@ -22,6 +22,7 @@ export default function NavBar() {
           <Icon
             color='#fff'
             fontSize={{ base: "1.4rem", md: "1.7rem" }}
+            display='block'
             as={FaGithub}
           />
         </Link>
