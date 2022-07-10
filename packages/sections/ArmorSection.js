@@ -1,16 +1,6 @@
 // @ts-nocheck
-import {
-  Grid,
-  GridItem,
-  Heading,
-  Box,
-  Flex,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import NumberInputWithTitle from "../components/NumberInputWithTitle";
 import { useCalculatorContext } from "../features/calculatorContext.tsx";
 
 export default function ArmorSection() {
@@ -18,19 +8,14 @@ export default function ArmorSection() {
 
   return (
     <Box>
-      <Heading fontSize={"3rem"}> Armor Class</Heading>
-      <NumberInput
-        size={"lg"}
-        maxW='468px'
-        value={inputsState.target_AC}
-        onChange={(e) => updateInput(Number(e), "target_AC")}
-      >
-        <NumberInputField fontSize={"2.5rem"} fontWeight='bold' />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
+      <NumberInputWithTitle
+        props={{
+          roll: "Armor Class",
+          value: inputsState.target_AC,
+          setValue: updateInput,
+          key: "target_AC",
+        }}
+      />
     </Box>
   );
 }

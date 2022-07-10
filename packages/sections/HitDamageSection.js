@@ -8,8 +8,9 @@ export default function HitDamageSection() {
   return (
     <Flex
       display='flex'
-      gap={{ sm: "5", lg: "10" }}
-      direction={{ base: "column", sm: "row", md: "row", lg: "row" }}
+      justifyContent='space-around'
+      gap='1'
+      marginBottom='1rem'
     >
       <NumberInputWithTitle
         props={{

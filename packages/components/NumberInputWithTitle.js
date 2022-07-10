@@ -14,7 +14,7 @@ export default function NumberInputWithTitle({
     roll,
     value,
     setValue,
-    justify,
+    justify = "space-between",
     size,
     key,
     flexDir = "column",
@@ -23,23 +23,26 @@ export default function NumberInputWithTitle({
   },
 }) {
   return (
-    <>
-      <Flex flexDir={{ base: "column", md: flexDir }} justify={justify}>
-        <Heading fontSize={font}>{roll}</Heading>
-        <NumberInput
-          isDisabled={disabled}
-          maxW='90px'
-          value={value}
-          onChange={(e) => setValue(Number(e), key)}
-          size={size}
-        >
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </Flex>
-    </>
+    <Flex
+      flexDir={{ base: "column", md: flexDir }}
+      justify={justify}
+      width='min'
+    >
+      <Heading fontSize={font}>{roll}</Heading>
+      <NumberInput
+        isDisabled={disabled}
+        maxW='90px'
+        value={value}
+        onChange={(e) => setValue(Number(e), key)}
+        size={size}
+        w='max'
+      >
+        <NumberInputField />
+        <NumberInputStepper>
+          <NumberIncrementStepper />
+          <NumberDecrementStepper />
+        </NumberInputStepper>
+      </NumberInput>
+    </Flex>
   );
 }

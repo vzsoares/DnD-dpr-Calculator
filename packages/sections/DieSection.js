@@ -159,7 +159,7 @@ export default function DieSection() {
           )}
         </Flex>
         {/* switch */}
-        <Box gridArea={"d"}>
+        <Flex flexDir='column' gridArea={"d"} alignItems='center'>
           <Heading fontSize={"1rem"}>{switchState ? "Crit" : "Normal"}</Heading>
           <Switch
             isDisabled={editingIndex !== -1 && true}
@@ -168,9 +168,9 @@ export default function DieSection() {
               setSwitchState(!switchState);
             }}
           />
-        </Box>
+        </Flex>
         {/* Die properties */}
-        <Flex gridArea={"e"} flexDir='column'>
+        <Flex gridArea={"e"} flexDir='column' alignItems='flex-end'>
           {dieProperties.map((element, i) => {
             return (
               <NumberInputWithTitle
@@ -190,7 +190,7 @@ export default function DieSection() {
           })}
         </Flex>
         {/* save/delete btn */}
-        <Flex gridArea={"b"} flexDir='column' gap='1' p='1rem'>
+        <Flex gridArea={"b"} flexDir='column' gap='1'>
           <Button
             onClick={() => saveDie()}
             isDisabled={editingIndex === -1 && true}

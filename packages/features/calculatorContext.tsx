@@ -8,7 +8,7 @@ import React, {
   useReducer,
 } from "react";
 
-import { ClassStates, attackResults } from "../types";
+import { ClassStates, attackResults, SavedAttackData } from "../types";
 
 // @ts-ignore
 import DPRCalculator from "../data/DPRCalculator.ts";
@@ -67,7 +67,7 @@ function CalculatorContextProvider({ children }) {
     });
   }
 
-  const startEditingAttack = useCallback((attack) => {
+  const startEditingAttack = useCallback((attack: SavedAttackData) => {
     setEditingIndex(attack.id);
 
     Object.entries(attack).forEach((a) =>

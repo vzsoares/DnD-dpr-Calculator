@@ -1,5 +1,5 @@
 import { CalculatorContextProvider } from "../packages/features/calculatorContext.tsx";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Box } from "@chakra-ui/react";
 
 import "../styles/globals.css";
 
@@ -8,7 +8,9 @@ function MyApp({ Component, pageProps }) {
     <ChakraProvider>
       {/* @ts-ignore */}
       <CalculatorContextProvider>
-        <Component {...pageProps} />
+        <Box padding='0.5rem'>
+          <Component {...pageProps} />
+        </Box>
       </CalculatorContextProvider>
     </ChakraProvider>
   );
