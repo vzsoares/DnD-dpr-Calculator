@@ -11,7 +11,7 @@ export default function NavBar() {
         justifyContent='space-between'
         align='center'
       >
-        <Heading fontSize={{ base: "1.4rem", md: "1.7rem" }} color='#fff'>
+        <Heading fontSize={{ base: "1.6rem", md: "1.9rem" }} color='#fff'>
           Damage per Round Calculator
         </Heading>
 

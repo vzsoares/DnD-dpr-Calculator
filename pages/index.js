@@ -13,10 +13,10 @@ export default function Home() {
   return (
     <Box maxW='998px' margin='0 auto'>
       <Flex gap='1' flexDir={{ base: "column", md: "row" }}>
-        <Box maxW='330px' margin='0 auto'>
+        <Box p='0.5rem' shadow='md'>
           <HitDamageSection />
           <AdvancedOptionsSection />
-          <Flex justifyContent='space-evenly' gap='1' marginY='1rem'>
+          <Flex justifyContent='space-evenly' gap='1' marginTop='1rem'>
             <ArmorSection />
             <Flex
               w='min-intrinsic'

@@ -109,6 +109,9 @@ export default function DieSection() {
         minW={"200px"}
         maxW={"998px"}
         minH={"200px"}
+        padding='0.5rem'
+        shadow='md'
+        height='100%'
       >
         <Flex gridArea={"a"} gap='1'>
           {editingIndex === -1 ? (
