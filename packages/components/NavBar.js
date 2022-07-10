@@ -1,4 +1,5 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Icon, Link } from "@chakra-ui/react";
+import { FaGithub } from "react-icons/fa";
 
 export default function NavBar() {
   return (
@@ -8,13 +9,22 @@ export default function NavBar() {
         w='100%'
         padding='0.5rem'
         justifyContent='space-between'
+        align='center'
       >
         <Heading fontSize={{ base: "1.4rem", md: "1.7rem" }} color='#fff'>
           Damage per Round Calculator
         </Heading>
-        <Box>
-          <p>github</p>
-        </Box>
+
+        <Link
+          href='https://github.com/vzsoares/DnD-dpr-Calculator'
+          target='_blank'
+        >
+          <Icon
+            color='#fff'
+            fontSize={{ base: "1.4rem", md: "1.7rem" }}
+            as={FaGithub}
+          />
+        </Link>
       </Flex>
     </Flex>
   );
