@@ -5,7 +5,7 @@ export default function SharpShooterCheckBox({
 }) {
   return (
     <Flex direction={"column"} width='min' justifyContent='space-between'>
-      <Heading fontSize={"1.5rem"}>GWM/SHA</Heading>
+      <Heading fontSize={"1.0rem"}>Great Weapon Master / Sharpshooter</Heading>
       <Flex h='40px'>
         <Checkbox
           isChecked={checked}
