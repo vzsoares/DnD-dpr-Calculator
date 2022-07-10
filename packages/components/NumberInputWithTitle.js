@@ -18,7 +18,7 @@ export default function NumberInputWithTitle({
     size,
     key,
     flexDir = "column",
-    font = "1.5rem",
+    font = "1.0rem",
     disabled = false,
   },
 }) {

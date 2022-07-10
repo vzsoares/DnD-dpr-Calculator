@@ -12,7 +12,7 @@ export default function NavBar() {
         align='center'
       >
         <Heading fontSize={{ base: "1.6rem", md: "1.9rem" }} color='#fff'>
-          Damage per Round Calculator
+          D&D 5e Damage Per Round Calculator
         </Heading>
 
         <Link

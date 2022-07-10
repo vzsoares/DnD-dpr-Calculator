@@ -14,7 +14,7 @@ export default function HitDamageSection() {
     >
       <NumberInputWithTitle
         props={{
-          roll: "HIT/DC",
+          roll: "Attack Bonus",
           value: inputsState.attack_bonus,
           setValue: updateInput,
           key: "attack_bonus",
