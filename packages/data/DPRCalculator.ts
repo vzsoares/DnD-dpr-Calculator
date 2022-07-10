@@ -271,7 +271,7 @@ class DiceSet {
 //------------------------//
 
 // Returns a DiceSet containing double the amount of dice of the parameter passed in the function call.
-function calculateDefaultCritDice(diceset: DiceSet): DiceSet {
+function calculateDefaultCritDiceSet(diceset: DiceSet): DiceSet {
   let dice: number[] = [];
   for (let i = 0; i < diceset.length() * 2; i++) {
     dice.push(diceset.getDie(i % diceset.length()).getSides());
@@ -298,62 +298,3 @@ function p_hit(A: number, B: number, M = 1): number {
 function p_crit(crit_range: number, adv_mod: number): number {
   return 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
 }
-
-// //-------------------//
-// //--- TEST SCRIPT ---//
-// //-------------------//
-// let my_attack = new Attack(
-//     "Greatsword STR18 LVL 5",
-//     7,
-//     4,
-//     new DiceSet([
-//       {
-//           "sides": 6,
-//           "reroll": 0,
-//           "minRoll": 1,
-//           "id": 1654967414633
-//       },
-//       {
-//           "sides": 6,
-//           "reroll": 0,
-//           "minRoll": 1,
-//           "id": 1654967414867
-//       }
-//   ]),
-//     new DiceSet([
-//       {
-//           "sides": 6,
-//           "reroll": 0,
-//           "minRoll": 1,
-//           "id": 1654967445367
-//       },
-//       {
-//           "sides": 6,
-//           "reroll": 0,
-//           "minRoll": 1,
-//           "id": 1654967445501
-//       },
-//       {
-//           "sides": 6,
-//           "reroll": 0,
-//           "minRoll": 1,
-//           "id": 1654967445678
-//       },
-//       {
-//           "sides": 6,
-//           "reroll": 0,
-//           "minRoll": 1,
-//           "id": 1654967445828
-//       },
-//   ]),
-//     1,
-//     false,
-//     20,
-//     12
-// )
-
-// console.log("\n          Chance to Hit: " + p_hit(12, 7, 1));
-// console.log("       Damage From Dice: " + my_attack.getAverageFromDice());
-// console.log("      Damage From Bonus: " + my_attack.getAverageFromBonus());
-// console.log("Damage From Crit Factor: " + my_attack.getAverageFromCritFactor());
-// console.log("           Damage Total: " + my_attack.getAverageTotal());
