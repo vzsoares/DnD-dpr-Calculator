@@ -230,7 +230,7 @@ class Die {
 */
 
 class DiceSet {
-  dice: Die[];
+  dice: Die[]; // Die object array
 
   constructor(
     dice: { sides: number; reroll: number; minRoll: number; id: number }[]
