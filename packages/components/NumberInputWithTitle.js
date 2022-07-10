@@ -20,6 +20,7 @@ export default function NumberInputWithTitle({
     flexDir = "column",
     font = "1.0rem",
     disabled = false,
+    h,
   },
 }) {
   return (
@@ -27,6 +28,7 @@ export default function NumberInputWithTitle({
       flexDir={{ base: "column", md: flexDir }}
       justify={justify}
       width='min'
+      h={h}
     >
       <Heading fontSize={font}>{roll}</Heading>
       <NumberInput
