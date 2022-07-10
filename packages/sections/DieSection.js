@@ -3,14 +3,15 @@ import React, { useState, useEffect } from "react";
 import SingleDie from "../components/SingleDie";
 import NumberInputWithTitle from "../components/NumberInputWithTitle";
 import { Grid, Heading, Box, Flex, Switch, Button } from "@chakra-ui/react";
-import { useCalculatorContext } from "../features/calculatorContext.js";
+import { useCalculatorContext } from "../features/calculatorContext.tsx";
 
 export default function DieSection() {
-  const { damageDiceList, setDamageDiceList, critDiceList, setCritDiceList } =
-    useCalculatorContext();
+  const { updateInput, inputsState } = useCalculatorContext();
 
   const [switchState, setSwitchState] = useState(false);
-  const [displayedDiceList, setDisplayedDiceList] = useState(damageDiceList);
+  const [displayedDiceList, setDisplayedDiceList] = useState(
+    inputsState.damage_dice
+  );
   const [editingIndex, setEditingIndex] = useState(-1);
 
   const [sides, setSides] = useState(1);
@@ -20,11 +21,13 @@ export default function DieSection() {
   useEffect(() => {
     // setDisplayedDiceList(
     //   !switchState
-    //     ? damageDiceList.sort((a, b) => a.sides - b.sides)
-    //     : critDiceList.sort((a, b) => a.sides - b.sides)
+    //     ? inputsState.damage_dice.sort((a, b) => a.sides - b.sides)
+    //     : inputsState.crit_dice.sort((a, b) => a.sides - b.sides)
     // );
-    setDisplayedDiceList(!switchState ? damageDiceList : critDiceList);
-  }, [damageDiceList, critDiceList, switchState]);
+    setDisplayedDiceList(
+      !switchState ? inputsState.damage_dice : inputsState.crit_dice
+    );
+  }, [inputsState.damage_dice, inputsState.crit_dice, switchState]);
 
   const dieProperties = [
     {
@@ -77,9 +80,9 @@ export default function DieSection() {
       });
     };
     if (!switchState) {
-      setDamageDiceList(saveLogic(damageDiceList));
+      updateInput(saveLogic(inputsState.damage_dice));
     } else if (switchState) {
-      setCritDiceList(saveLogic(critDiceList));
+      updateInput(saveLogic(inputsState.crit_dice), "crit_dice");
     }
     setEditingIndex(-1);
   }
@@ -92,12 +95,13 @@ export default function DieSection() {
     };
 
     if (!switchState) {
-      setDamageDiceList(saveLogic(damageDiceList));
+      updateInput(saveLogic(inputsState.damage_dice), "damage_dice");
     } else if (switchState) {
-      setCritDiceList(saveLogic(critDiceList));
+      updateInput(saveLogic(inputsState.crit_dice), "crit_dice");
     }
     setEditingIndex(-1);
   }
+
   return (
     <>
       <Grid
@@ -105,6 +109,9 @@ export default function DieSection() {
         minW={"200px"}
         maxW={"998px"}
         minH={"200px"}
+        padding='0.5rem'
+        shadow='md'
+        height='100%'
       >
         <Flex gridArea={"a"} gap='1'>
           {editingIndex === -1 ? (
@@ -116,24 +123,30 @@ export default function DieSection() {
                     value: element,
                     func: () =>
                       !switchState
-                        ? setDamageDiceList([
-                            ...damageDiceList,
-                            {
-                              sides: element,
-                              reroll: 0,
-                              minRoll: 1,
-                              id: getUniqueId(),
-                            },
-                          ])
-                        : setCritDiceList([
-                            ...critDiceList,
-                            {
-                              sides: element,
-                              reroll: 0,
-                              minRoll: 1,
-                              id: getUniqueId(),
-                            },
-                          ]),
+                        ? updateInput(
+                            [
+                              ...inputsState.damage_dice,
+                              {
+                                sides: element,
+                                reroll: 0,
+                                minRoll: 1,
+                                id: getUniqueId(),
+                              },
+                            ],
+                            "damage_dice"
+                          )
+                        : updateInput(
+                            [
+                              ...inputsState.crit_dice,
+                              {
+                                sides: element,
+                                reroll: 0,
+                                minRoll: 1,
+                                id: getUniqueId(),
+                              },
+                            ],
+                            "crit_dice"
+                          ),
                   }}
                 />
               );
@@ -149,7 +162,7 @@ export default function DieSection() {
           )}
         </Flex>
         {/* switch */}
-        <Box gridArea={"d"}>
+        <Flex flexDir='column' gridArea={"d"} alignItems='center'>
           <Heading fontSize={"1rem"}>{switchState ? "Crit" : "Normal"}</Heading>
           <Switch
             isDisabled={editingIndex !== -1 && true}
@@ -158,9 +171,9 @@ export default function DieSection() {
               setSwitchState(!switchState);
             }}
           />
-        </Box>
+        </Flex>
         {/* Die properties */}
-        <Flex gridArea={"e"} flexDir='column'>
+        <Flex gridArea={"e"} flexDir='column' alignItems='flex-end'>
           {dieProperties.map((element, i) => {
             return (
               <NumberInputWithTitle
@@ -180,7 +193,7 @@ export default function DieSection() {
           })}
         </Flex>
         {/* save/delete btn */}
-        <Flex gridArea={"b"} flexDir='column' gap='1' p='1rem'>
+        <Flex gridArea={"b"} flexDir='column' gap='1'>
           <Button
             onClick={() => saveDie()}
             isDisabled={editingIndex === -1 && true}

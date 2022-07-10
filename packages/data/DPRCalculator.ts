@@ -11,15 +11,15 @@
 */
 
 export default class Attack {
-  name: string;               // custom name for the attack
-  attack_bonus: number;       // attack roll bonus, also known as hit/dc
-  damage_bonus: number;       // damage roll bonus, for example bonus for strength or magic items.
-  damage_dice: DiceSet;       // array of die, for example 2d6 for a greatsword.
-  crit_dice: DiceSet;         // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
+  name: string; // custom name for the attack
+  attack_bonus: number; // attack roll bonus, also known as hit/dc
+  damage_bonus: number; // damage roll bonus, for example bonus for strength or magic items.
+  damage_dice: DiceSet; // array of die, for example 2d6 for a greatsword.
+  crit_dice: DiceSet; // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
   advantage_modifier: number; // 1 for normal, 2 for advantage and 3 for elven accuracy
-  gwmsharp: boolean;          // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus.
-  crit_range: number;         // 20 for crit on 20 only. 19 for crit range of 19-20.
-  target_AC: number;          // target's armor class.
+  gwmsharp: boolean; // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus.
+  crit_range: number; // 20 for crit on 20 only. 19 for crit range of 19-20.
+  target_AC: number; // target's armor class.
 
   constructor(
     name: string,
@@ -74,7 +74,7 @@ export default class Attack {
     }
 
     let diceset = new DiceSet(tempdice);
-    return diceset.getAverageRolls();
+    return diceset.getAverageTotal();
   }
 
   // Returns the average damage from dice rolls on a critical hit.
@@ -99,14 +99,28 @@ export default class Attack {
   // For example, if your chance to hit is 65% and you are attacking with a greatsword with advantage,
   // your average damage will be (1 - (1 - 0.65) ^ 2) * (2 * 3.5) = 6.1425
   getDiceDPR() {
-    return this.getAverageDiceDMG() * p_hit(this.target_AC, this.getEffectiveAttackBonus(), this.advantage_modifier);
+    return (
+      this.getAverageDiceDMG() *
+      p_hit(
+        this.target_AC,
+        this.getEffectiveAttackBonus(),
+        this.advantage_modifier
+      )
+    );
   }
 
   // Returns the average damage from bonus only, ACCOUNTING FOR CHANCE TO HIT.
   // For example if chance to hit is 65% and you have a damage bonus of 5 and you are attacking with elven accuracy,
   // your damage will be (1 - (1 - 0.65) ^ 3) * 5 = 4.785625
   getDmgBonusDPR() {
-    return this.getEffectiveDamageBonus() * p_hit(this.target_AC, this.getEffectiveAttackBonus(), this.advantage_modifier);
+    return (
+      this.getEffectiveDamageBonus() *
+      p_hit(
+        this.target_AC,
+        this.getEffectiveAttackBonus(),
+        this.advantage_modifier
+      )
+    );
   }
 
   // Returns the average damage PER ATTACK derived from critical hits.
@@ -146,34 +160,27 @@ export default class Attack {
 
     return (
       p_crit(this.crit_range, this.advantage_modifier) *
-      (crit_diceset.getAverageRolls() - damage_diceset.getAverageRolls())
+      (crit_diceset.getAverageTotal() - damage_diceset.getAverageTotal())
     );
   }
 
   // Returns the average damage dealt by the attack on a normal hit.
   getAverageDMG() {
-    return (
-      this.getAverageDiceDMG() +
-      this.getAverageBonusDMG()
-    );
+    return this.getAverageDiceDMG() + this.getAverageBonusDMG();
   }
 
   // Returns the average damage dealt by the attack on a critical hit.
-  getAverageCriticalDMG () {
+  getAverageCriticalDMG() {
     return this.getAverageCritDMG + this.getEffectiveDamageBonus();
   }
 
   // Returns the average damage per turn dealt by this attack
   getDPR() {
     return (
-      this.getDiceDPR() +
-      this.getDmgBonusDPR() + 
-      this.getAverageCritFactorDMG()
+      this.getDiceDPR() + this.getDmgBonusDPR() + this.getAverageCritFactorDMG()
     );
   }
 }
-
-
 
 //-----------------------------//
 //--- CLASS DIE DESCRIPTION ---//
@@ -219,8 +226,6 @@ class Die {
     );
   }
 }
-
-
 
 //---------------------------------//
 //--- CLASS DiceSet DESCRIPTION ---//
@@ -288,8 +293,9 @@ function T(N: number) {
 // given the target's armor class, the attacker's attack bonus,
 // and the attack's advantage modifier.
 function p_hit(A: number, B: number, M = 1): number {
-  if (A >= B + 20) {return 1 - (1 - 0.05) ** M;}
-  else if (A <= B + 2) return 1 - (1 - 0.95) ** M;
+  if (A >= B + 20) {
+    return 1 - (1 - 0.05) ** M;
+  } else if (A <= B + 2) return 1 - (1 - 0.95) ** M;
   return 1 - (1 - (21 + B - A) / 20) ** M;
 }
 
@@ -297,4 +303,3 @@ function p_hit(A: number, B: number, M = 1): number {
 // given the attacker's critical range, and advantage modifier.
 function p_crit(crit_range: number, adv_mod: number): number {
   return 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
-}

@@ -4,7 +4,7 @@ export default function AttackItem({
   props: { e, startEditingAttack, editingIndex, deleteAttack },
 }) {
   return (
-    <Flex>
+    <Flex maxW='350px'>
       <Container>{e[0].name || "Nameless attack"}</Container>
       <Container>
         {e[1].totalAttackDamage}{" "}

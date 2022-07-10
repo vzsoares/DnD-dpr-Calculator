@@ -1,6 +1,6 @@
-import { Heading, Box } from "@chakra-ui/react";
+import { Heading, Box, Flex } from "@chakra-ui/react";
 import AttackInfoTable from "../components/AttackInfoTable";
-import { useCalculatorContext } from "../features/calculatorContext.js";
+import { useCalculatorContext } from "../features/calculatorContext.tsx";
 
 export default function AttackSection() {
   const { displayedAttackInfo, attacksList } = useCalculatorContext();
@@ -20,33 +20,36 @@ export default function AttackSection() {
   }, 0);
 
   return (
-    <Box maxW='468px' mb='1rem'>
-      <Heading>Current Attack info</Heading>
-      <AttackInfoTable
-        props={{
-          value: [
-            displayedAttackInfo?.damageFromDice,
-            displayedAttackInfo?.damageFromBonus,
-            displayedAttackInfo?.damageFromCritFactor,
-            displayedAttackInfo?.totalAttackDamage,
-          ],
-          lines: "",
-        }}
-      />
-      <br />
-      <Heading>Total Attacks info</Heading>
-      <AttackInfoTable
-        props={{
-          value: [
-            damageFromDice,
-            damageFromBonus,
-            damageFromCritFactor,
-            totalAttackDamage,
-            numberOfAttacks,
-          ],
-          lines: "Number of Attacks",
-        }}
-      />
-    </Box>
+    <Flex mb='1rem' gap='2' flexWrap='wrap' justifyContent='space-evenly'>
+      <Flex maxW='468px' flexDir='column' justifyContent='space-between'>
+        <Heading>Current Attack info</Heading>
+        <AttackInfoTable
+          props={{
+            value: [
+              displayedAttackInfo?.damageFromDice,
+              displayedAttackInfo?.damageFromBonus,
+              displayedAttackInfo?.damageFromCritFactor,
+              displayedAttackInfo?.totalAttackDamage,
+            ],
+            lines: "",
+          }}
+        />
+      </Flex>
+      <Flex maxW='468px' flexDir='column' justifyContent='space-between'>
+        <Heading>Total Attacks info</Heading>
+        <AttackInfoTable
+          props={{
+            value: [
+              damageFromDice,
+              damageFromBonus,
+              damageFromCritFactor,
+              totalAttackDamage,
+              numberOfAttacks,
+            ],
+            lines: "Number of Attacks",
+          }}
+        />
+      </Flex>
+    </Flex>
   );
 }
