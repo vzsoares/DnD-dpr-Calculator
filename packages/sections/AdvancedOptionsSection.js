@@ -6,7 +6,7 @@ import { useCalculatorContext } from "../features/calculatorContext.tsx";
 export default function AdvancedOptionsSection() {
   const { updateInput, inputsState } = useCalculatorContext();
   return (
-    <Flex justifyContent={{ base: "space-around" }}>
+    <Flex justifyContent={{ base: "space-between" }}>
       <SelectInput
         props={{
           title: "Crit Range",

@@ -18,11 +18,7 @@ export default function Home() {
           <AdvancedOptionsSection />
           <Flex justifyContent='space-evenly' gap='1' marginTop='1rem'>
             <ArmorSection />
-            <Flex
-              w='min-intrinsic'
-              flexDir='column'
-              justifyContent='space-between'
-            >
+            <Flex gap='1' flexDir='column' justifyContent='space-between'>
               <NameInput />
               <SaveAttackBtn />
             </Flex>

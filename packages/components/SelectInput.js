@@ -4,7 +4,7 @@ export default function SelectionSelectInput({
   props: { displayValues, values, title, updateInput, key, inputsState },
 }) {
   return (
-    <Box maxW='150px'>
+    <Box maxW='200px'>
       <Heading fontSize={"1rem"}>{title}</Heading>
       <Select
         value={inputsState.key}

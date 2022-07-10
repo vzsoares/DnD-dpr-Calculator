@@ -14,6 +14,7 @@ export default function ArmorSection() {
           value: inputsState.target_AC,
           setValue: updateInput,
           key: "target_AC",
+          h: "100%",
         }}
       />
     </Box>
