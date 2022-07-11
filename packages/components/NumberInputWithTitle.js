@@ -29,6 +29,7 @@ export default function NumberInputWithTitle({
       justify={justify}
       width='min'
       h={h}
+      gap='1'
     >
       <Heading fontSize={font}>{roll}</Heading>
       <NumberInput
@@ -38,6 +39,8 @@ export default function NumberInputWithTitle({
         onChange={(e) => setValue(Number(e), key)}
         size={size}
         w='max'
+        h='max'
+        borderColor='#222'
       >
         <NumberInputField />
         <NumberInputStepper>
