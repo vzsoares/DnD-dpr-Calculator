@@ -352,7 +352,7 @@ function T(N: number) {
 // given the difficulty class, your bonus, and your advantage modifier respectively.
 // use M = 0 for disadvantage, 1 for standard, 2 for advantage.
 function p_save(DC: number, B: number, M = 1) {
-  return M < 1 ? ((21 + B - DC) / 20)^2 : 1 - (1 - (21 + B - DC) / 20) ** M;
+  return M < 1 ? ((21 + B - DC) / 20) ** 2 : 1 - (1 - (21 + B - DC) / 20) ** M;
 }
 
 // Returns the probability to hit an attack
@@ -361,16 +361,17 @@ function p_save(DC: number, B: number, M = 1) {
 // use M = 0 for disadvantage, 1 for standard, 2 for advantage, 3 for elven accuracy.
 function p_hit(A: number, B: number, M = 1): number {
   if (A >= B + 20) {
-    return M < 1 ? 0.05^2 : 1 - (1 - 0.05) ** M;
+    return M < 1 ? 0.05 ** 2 : 1 - (1 - 0.05) ** M;
   } 
   else if (A <= B + 2) {
-    return M < 1 ? 0.95^2 : 1 - (1 - 0.95) ** M;
+    return M < 1 ? 0.95 ** 2 : 1 - (1 - 0.95) ** M;
   }
-  return M < 1 ? ((21 + B - A) / 20)^2 : 1 - (1 - (21 + B - A) / 20) ** M;
+  console.log(((21 + B - A) / 20) ** 2);
+  return M < 1 ? ((21 + B - A) / 20) ** 2 : 1 - (1 - (21 + B - A) / 20) ** M;
 }
 
 // Returns the probability of a critical hit
 // given the attacker's critical range, and advantage modifier.
 function p_crit(crit_range: number, adv_mod: number): number {
-  return adv_mod < 1 ? ((21 - crit_range) / 20) ^ 2 : 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
+  return adv_mod < 1 ? ((21 - crit_range) / 20) ** 2 : 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
 }
