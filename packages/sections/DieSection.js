@@ -37,13 +37,13 @@ export default function DieSection() {
       flexDir: "row",
     },
     {
-      roll: "Reroll below",
+      roll: "Reroll Below",
       value: reroll,
       setValue: (e) => setReroll(e),
       flexDir: "row",
     },
     {
-      roll: "Minimum roll",
+      roll: "Minimum Roll",
       value: minRoll,
       setValue: (e) => setMinRoll(e),
       flexDir: "row",
