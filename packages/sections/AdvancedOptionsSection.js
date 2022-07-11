@@ -20,8 +20,13 @@ export default function AdvancedOptionsSection() {
       <SelectInput
         props={{
           title: "Advantage Modifier",
-          displayValues: ["Standard", "Advantage", "Elven Accuracy"],
-          values: [1, 2, 3],
+          displayValues: [
+            "Disadvantage",
+            "Standard",
+            "Advantage",
+            "Elven Accuracy",
+          ],
+          values: [0, 1, 2, 3],
           key: "advantage_modifier",
           updateInput,
           inputsState,

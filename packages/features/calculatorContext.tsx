@@ -19,6 +19,7 @@ const calculatorContext = createContext({});
 
 function CalculatorContextProvider({ children }) {
   const [inputsState, dispatchInputs] = useReducer(inputsReducer, initialState);
+
   // other vars
   const [displayedAttackInfo, setDisplayedAttackInfo] = useState();
   const [currentAttackData, setCurrentAttackData] = useState();

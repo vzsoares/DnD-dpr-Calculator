@@ -41,7 +41,7 @@ export interface ClassStates {
   attack_bonus: number;
   damage_dice: dice[];
   crit_dice: dice[];
-  advantage_modifier: 1 | 2 | 3;
+  advantage_modifier: 0 | 1 | 2 | 3;
   gwmsharp: boolean;
   crit_range: 20 | 19 | 18;
   target_AC: number;

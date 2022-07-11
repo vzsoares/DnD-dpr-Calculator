@@ -7,7 +7,7 @@ export default function SelectionSelectInput({
     <Box maxW='200px'>
       <Heading fontSize={"1rem"}>{title}</Heading>
       <Select
-        value={inputsState.key}
+        value={`${inputsState[key]}`}
         onChange={(e) => updateInput(Number(e.target.value), key)}
       >
         {displayValues.map((e, i) => {
