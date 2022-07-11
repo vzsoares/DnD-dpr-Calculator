@@ -5,7 +5,7 @@ export default function AttackItem({
 }) {
   return (
     <Flex maxW='350px'>
-      <Container>{e[0].name || "Nameless attack"}</Container>
+      <Container>{e[0].name || "Nameless Attack"}</Container>
       <Container>
         {e[1].totalAttackDamage}{" "}
         <Button

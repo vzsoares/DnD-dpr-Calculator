@@ -163,7 +163,7 @@ export default function DieSection() {
         </Flex>
         {/* switch */}
         <Flex flexDir='column' gridArea={"d"} alignItems='center'>
-          <Heading fontSize={"1rem"}>{switchState ? "Crit" : "Normal"}</Heading>
+          <Heading fontSize={"1rem"}>{switchState ? "Critical Hit" : "Normal Hit"}</Heading>
           <Switch
             isDisabled={editingIndex !== -1 && true}
             size='lg'
@@ -198,13 +198,13 @@ export default function DieSection() {
             onClick={() => saveDie()}
             isDisabled={editingIndex === -1 && true}
           >
-            Save
+            Save Die
           </Button>
           <Button
             onClick={() => deleteDie()}
             isDisabled={editingIndex === -1 && true}
           >
-            Delete
+            Delete Die
           </Button>
         </Flex>
         {/* Dice Grid */}
