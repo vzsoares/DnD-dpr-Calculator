@@ -9,7 +9,7 @@ export default function AdvancedOptionsSection() {
     <Flex justifyContent={{ base: "space-between" }}>
       <SelectInput
         props={{
-          title: "Crit Range",
+          title: "Critical Range",
           displayValues: ["20-20", "19-20", "18-20"],
           values: [20, 19, 18],
           key: "crit_range",
@@ -20,7 +20,7 @@ export default function AdvancedOptionsSection() {
       <SelectInput
         props={{
           title: "Advantage Modifier",
-          displayValues: ["Normal", "Advantage", "Elven accuracy"],
+          displayValues: ["Normal", "Advantage", "Elven Accuracy"],
           values: [1, 2, 3],
           key: "advantage_modifier",
           updateInput,
