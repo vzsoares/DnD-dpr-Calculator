@@ -17,7 +17,7 @@ export default function AttackTable({ props: { value, lines } }) {
   return (
     <>
       <TableContainer>
-        <Table variant='simple'>
+        <Table variant='simple' colorScheme='blackAlpha'>
           <Thead></Thead>
           <Tbody>
             {lines && (
@@ -40,7 +40,7 @@ export default function AttackTable({ props: { value, lines } }) {
             </Tr>
 
             <Tr>
-              <Th>Total Attack Damage</Th>
+              <Th textTransform='none'>Total Attack Damage</Th>
               <Th>{value[3]}</Th>
             </Tr>
           </Tbody>

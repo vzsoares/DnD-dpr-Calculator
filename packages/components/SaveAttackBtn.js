@@ -4,7 +4,11 @@ export default function SaveAtackBtn() {
   const { saveAttack, editingIndex } = useCalculatorContext();
   return (
     <>
-      <Button onClick={() => saveAttack()}>
+      <Button
+        onClick={() => saveAttack()}
+        colorScheme='blackAlpha'
+        color='#222'
+      >
         {editingIndex ? "Edit Attack" : "Save Attack"}
       </Button>
     </>

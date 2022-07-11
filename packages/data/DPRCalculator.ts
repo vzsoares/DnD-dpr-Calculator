@@ -13,31 +13,31 @@
 */
 
 class SavingThrowAttack {
-  name: string;                             // SavingThrow name
-  save_dc: number;                          // SavingThrow difficulty class
-  save_stat: string;                        // STR, DEX, CON, INT, WIS, OR CHA
-  damage_dice: DiceSet;                     // damage dice
-  damage_bonus: number;                     // bonus static damage
-  target_save_bonus: number;                // enemy SavingThrow bonus    
-  target_save_advantage_modifier: number;   // 0 for disadvantage, 1 for standard roll, 2 for advantage
-  save_for_half: boolean;                   // does the attack deal damage on failed save? for example, fireball does, disintegrate doesnt't
+  name: string; // SavingThrow name
+  save_dc: number; // SavingThrow difficulty class
+  save_stat: string; // STR, DEX, CON, INT, WIS, OR CHA
+  damage_dice: DiceSet; // damage dice
+  damage_bonus: number; // bonus static damage
+  target_save_bonus: number; // enemy SavingThrow bonus
+  target_save_advantage_modifier: number; // 0 for disadvantage, 1 for standard roll, 2 for advantage
+  save_for_half: boolean; // does the attack deal damage on failed save? for example, fireball does, disintegrate doesnt't
 
   constructor(
-    name: string, 
-    save_dc: number, 
-    save_stat: string, 
-    damage_dice: DiceSet, 
+    name: string,
+    save_dc: number,
+    save_stat: string,
+    damage_dice: DiceSet,
     damage_bonus: number,
     target_save_bonus: number,
     target_save_advantage_modifier: number
   ) {
-    this.name = name;             
-    this.save_dc = save_dc;            
-    this.save_stat = save_stat ;          
-    this.damage_dice = damage_dice;  
-    this.damage_bonus = damage_bonus;     
-    this.target_save_bonus = target_save_bonus; 
-    this.target_save_advantage_modifier = target_save_advantage_modifier; 
+    this.name = name;
+    this.save_dc = save_dc;
+    this.save_stat = save_stat;
+    this.damage_dice = damage_dice;
+    this.damage_bonus = damage_bonus;
+    this.target_save_bonus = target_save_bonus;
+    this.target_save_advantage_modifier = target_save_advantage_modifier;
   }
 
   getDPR() {
@@ -48,8 +48,6 @@ class SavingThrowAttack {
     // TODO
   }
 }
-
-
 
 //--------------------------------//
 //--- CLASS Attack DESCRIPTION ---//
@@ -63,15 +61,15 @@ class SavingThrowAttack {
 */
 
 export default class Attack {
-  name: string;               // custom name for the attack
-  attack_bonus: number;       // attack roll bonus, also known as hit/dc
-  damage_bonus: number;       // damage roll bonus, for example bonus for strength or magic items
-  damage_dice: DiceSet;       // array of die, for example 2d6 for a greatsword
-  crit_dice: DiceSet;         // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
+  name: string; // custom name for the attack
+  attack_bonus: number; // attack roll bonus, also known as hit/dc
+  damage_bonus: number; // damage roll bonus, for example bonus for strength or magic items
+  damage_dice: DiceSet; // array of die, for example 2d6 for a greatsword
+  crit_dice: DiceSet; // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
   advantage_modifier: 0 | 1 | 2 | 3; // 0 for disadvantage, 1 for standard roll, 2 for advantage and 3 for elven accuracy
-  gwmsharp: boolean;          // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus
-  crit_range: number;         // 20 for crit on 20 only. 19 for crit range of 19-20
-  target_AC: number;          // target's armor class
+  gwmsharp: boolean; // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus
+  crit_range: number; // 20 for crit on 20 only. 19 for crit range of 19-20
+  target_AC: number; // target's armor class
 
   constructor(
     name: string,
@@ -362,16 +360,16 @@ function p_save(DC: number, B: number, M = 1) {
 function p_hit(A: number, B: number, M = 1): number {
   if (A >= B + 20) {
     return M < 1 ? 0.05 ** 2 : 1 - (1 - 0.05) ** M;
-  } 
-  else if (A <= B + 2) {
+  } else if (A <= B + 2) {
     return M < 1 ? 0.95 ** 2 : 1 - (1 - 0.95) ** M;
   }
-  console.log(((21 + B - A) / 20) ** 2);
   return M < 1 ? ((21 + B - A) / 20) ** 2 : 1 - (1 - (21 + B - A) / 20) ** M;
 }
 
 // Returns the probability of a critical hit
 // given the attacker's critical range, and advantage modifier.
 function p_crit(crit_range: number, adv_mod: number): number {
-  return adv_mod < 1 ? ((21 - crit_range) / 20) ** 2 : 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
+  return adv_mod < 1
+    ? ((21 - crit_range) / 20) ** 2
+    : 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
 }

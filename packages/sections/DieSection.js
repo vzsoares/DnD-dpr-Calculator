@@ -200,12 +200,16 @@ export default function DieSection() {
           <Button
             onClick={() => saveDie()}
             isDisabled={editingIndex === -1 && true}
+            colorScheme='blackAlpha'
+            color='gray.700'
           >
             Save Die
           </Button>
           <Button
             onClick={() => deleteDie()}
             isDisabled={editingIndex === -1 && true}
+            colorScheme='blackAlpha'
+            color='gray.700'
           >
             Delete Die
           </Button>

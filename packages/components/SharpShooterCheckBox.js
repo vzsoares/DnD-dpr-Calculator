@@ -11,6 +11,7 @@ export default function SharpShooterCheckBox({
           isChecked={checked}
           onChange={(e) => setChecked(e.target.checked, key)}
           justifyContent='center'
+          borderColor='#222'
           size='lg'
           margin='0 auto'
         />

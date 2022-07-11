@@ -7,6 +7,7 @@ export default function SelectionSelectInput({
     <Box maxW='200px'>
       <Heading fontSize={"1rem"}>{title}</Heading>
       <Select
+        borderColor='#222'
         value={`${inputsState[key]}`}
         onChange={(e) => updateInput(Number(e.target.value), key)}
       >
