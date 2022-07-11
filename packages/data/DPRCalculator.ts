@@ -1,25 +1,77 @@
 // @ts-nocheck
+
+//-------------------------------------------//
+//--- CLASS SavingThrowAttack DESCRIPTION ---//
+//-------------------------------------------//
+/*
+    This class is used to instantiate SavingThrowAttack objects, 
+    which represent instances of D&D 5e attacks that require saving throw,
+    for example, Fireball, Spirit Guardians, etc...
+    These objects can be used to store data and perform
+    statistical analysis about these attacks such
+    as calculating the average damage per round.
+*/
+
+class SavingThrowAttack {
+  name: string;                             // SavingThrow name
+  save_dc: number;                          // SavingThrow difficulty class
+  save_stat: string;                        // STR, DEX, CON, INT, WIS, OR CHA
+  damage_dice: DiceSet;                     // damage dice
+  damage_bonus: number;                     // bonus static damage
+  target_save_bonus: number;                // enemy SavingThrow bonus    
+  target_save_advantage_modifier: number;   // 0 for disadvantage, 1 for standard roll, 2 for advantage
+  save_for_half: boolean;                   // does the attack deal damage on failed save? for example, fireball does, disintegrate doesnt't
+
+  constructor(
+    name: string, 
+    save_dc: number, 
+    save_stat: string, 
+    damage_dice: DiceSet, 
+    damage_bonus: number,
+    target_save_bonus: number,
+    target_save_advantage_modifier: number
+  ) {
+    this.name = name;             
+    this.save_dc = save_dc;            
+    this.save_stat = save_stat ;          
+    this.damage_dice = damage_dice;  
+    this.damage_bonus = damage_bonus;     
+    this.target_save_bonus = target_save_bonus; 
+    this.target_save_advantage_modifier = target_save_advantage_modifier; 
+  }
+
+  getDPR() {
+    // TODO
+  }
+
+  getDamageOnFailedSave() {
+    // TODO
+  }
+}
+
+
+
 //--------------------------------//
-//--- CLASS ATTACK DESCRIPTION ---//
+//--- CLASS Attack DESCRIPTION ---//
 //--------------------------------//
 /*
     This class is used to instantiate Attack objects,
-    which represent instances of D&D 5e weapon attacks.
+    which represent instances of D&D 5e attack rolls.
     These objects can be used to store data and perform
-    statistical analysis about these weapons attacks such
+    statistical analysis about these attacks such
     as calculating the average damage per round.
 */
 
 export default class Attack {
-  name: string; // custom name for the attack
-  attack_bonus: number; // attack roll bonus, also known as hit/dc
-  damage_bonus: number; // damage roll bonus, for example bonus for strength or magic items.
-  damage_dice: DiceSet; // array of die, for example 2d6 for a greatsword.
-  crit_dice: DiceSet; // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
-  advantage_modifier: number; // 1 for normal, 2 for advantage and 3 for elven accuracy
-  gwmsharp: boolean; // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus.
-  crit_range: number; // 20 for crit on 20 only. 19 for crit range of 19-20.
-  target_AC: number; // target's armor class.
+  name: string;               // custom name for the attack
+  attack_bonus: number;       // attack roll bonus, also known as hit/dc
+  damage_bonus: number;       // damage roll bonus, for example bonus for strength or magic items
+  damage_dice: DiceSet;       // array of die, for example 2d6 for a greatsword
+  crit_dice: DiceSet;         // array of die for when attack is critical hit, for example 4d6 for a greatsword plus 6d8 for divine smite used only when attack is a crit
+  advantage_modifier: 0 | 1 | 2 | 3; // 0 for disadvantage, 1 for standard roll, 2 for advantage and 3 for elven accuracy
+  gwmsharp: boolean;          // 0 for no, 1 for yes. adds plus 10 to damage bonus, and reduces 5 from attack bonus
+  crit_range: number;         // 20 for crit on 20 only. 19 for crit range of 19-20
+  target_AC: number;          // target's armor class
 
   constructor(
     name: string,
@@ -63,6 +115,7 @@ export default class Attack {
   getAverageDiceDMG() {
     let tempdice: Die[] = []; // create empty array
 
+    // instantiate Die objects
     for (let index = 0; index < this.damage_dice?.length; index++) {
       tempdice.push(
         new Die(
@@ -73,14 +126,16 @@ export default class Attack {
       );
     }
 
+    // instantiate DiceSet object
     let diceset = new DiceSet(tempdice);
     return diceset.getAverageTotal();
   }
 
   // Returns the average damage from dice rolls on a critical hit.
-  getAverageCritDMG() {
+  getAverageCritDiceDMG() {
     let tempcritdice: Die[] = []; // create empty array
 
+    // instantiate Die objects
     for (let index = 0; index < this.crit_dice?.length; index++) {
       tempcritdice.push(
         new Die(
@@ -91,6 +146,7 @@ export default class Attack {
       );
     }
 
+    // instantiate DiceSet object
     let crit_diceset = new DiceSet(tempcritdice);
     return crit_diceset.getAverageRolls();
   }
@@ -135,6 +191,7 @@ export default class Attack {
     let tempdice: Die[] = []; // create empty array
     let tempcritdice: Die[] = []; // create empty array
 
+    // instantiate die objects
     for (let index = 0; index < this.damage_dice?.length; index++) {
       tempdice.push(
         new Die(
@@ -145,6 +202,7 @@ export default class Attack {
       );
     }
 
+    // instantiate die objects
     for (let index = 0; index < this.crit_dice?.length; index++) {
       tempcritdice.push(
         new Die(
@@ -155,6 +213,7 @@ export default class Attack {
       );
     }
 
+    // instantiate DiceSet objects
     let damage_diceset = new DiceSet(tempdice);
     let crit_diceset = new DiceSet(tempcritdice);
 
@@ -166,12 +225,12 @@ export default class Attack {
 
   // Returns the average damage dealt by the attack on a normal hit.
   getAverageDMG() {
-    return this.getAverageDiceDMG() + this.getAverageBonusDMG();
+    return this.getAverageDiceDMG() + this.getEffectiveDamageBonus();
   }
 
   // Returns the average damage dealt by the attack on a critical hit.
   getAverageCriticalDMG() {
-    return this.getAverageCritDMG + this.getEffectiveDamageBonus();
+    return this.getAverageCritDiceDMG() + this.getEffectiveDamageBonus();
   }
 
   // Returns the average damage per turn dealt by this attack
@@ -275,7 +334,7 @@ class DiceSet {
 //--- HELPER FUNCTIONS ---//
 //------------------------//
 
-// Returns a DiceSet containing double the amount of dice of the parameter passed in the function call.
+// Returns a DiceSet containing double the amount of dice in the parameter passed in the function call.
 function calculateDefaultCritDiceSet(diceset: DiceSet): DiceSet {
   let dice: number[] = [];
   for (let i = 0; i < diceset.length() * 2; i++) {
@@ -289,18 +348,29 @@ function T(N: number) {
   return (N ** 2 + N) / 2;
 }
 
+// Returns the probability to pass a saving throw
+// given the difficulty class, your bonus, and your advantage modifier respectively.
+// use M = 0 for disadvantage, 1 for standard, 2 for advantage.
+function p_save(DC: number, B: number, M = 1) {
+  return M < 1 ? ((21 + B - DC) / 20)^2 : 1 - (1 - (21 + B - DC) / 20) ** M;
+}
+
 // Returns the probability to hit an attack
 // given the target's armor class, the attacker's attack bonus,
-// and the attack's advantage modifier.
+// and the attack's advantage modifier respectively.
+// use M = 0 for disadvantage, 1 for standard, 2 for advantage, 3 for elven accuracy.
 function p_hit(A: number, B: number, M = 1): number {
   if (A >= B + 20) {
-    return 1 - (1 - 0.05) ** M;
-  } else if (A <= B + 2) return 1 - (1 - 0.95) ** M;
-  return 1 - (1 - (21 + B - A) / 20) ** M;
+    return M < 1 ? 0.05^2 : 1 - (1 - 0.05) ** M;
+  } 
+  else if (A <= B + 2) {
+    return M < 1 ? 0.95^2 : 1 - (1 - 0.95) ** M;
+  }
+  return M < 1 ? ((21 + B - A) / 20)^2 : 1 - (1 - (21 + B - A) / 20) ** M;
 }
 
 // Returns the probability of a critical hit
 // given the attacker's critical range, and advantage modifier.
 function p_crit(crit_range: number, adv_mod: number): number {
-  return 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
+  return adv_mod < 1 ? ((21 - crit_range) / 20) ^ 2 : 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
 }
