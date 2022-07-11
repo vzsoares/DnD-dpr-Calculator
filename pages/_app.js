@@ -1,11 +1,5 @@
 import { CalculatorContextProvider } from "../packages/features/calculatorContext.tsx";
-import {
-  ChakraProvider,
-  Box,
-  extendTheme,
-  withDefaultProps,
-  Input,
-} from "@chakra-ui/react";
+import { ChakraProvider, Box, extendTheme } from "@chakra-ui/react";
 
 import "../styles/globals.css";
 import NavBar from "../packages/components/NavBar.js";
@@ -20,11 +14,11 @@ function MyApp({ Component, pageProps }) {
       styles={`
         /* latin */
         @font-face {
-          font-family: 'MrsEavesAllCaps';
+          font-family: 'TexgyrebonumBold';
           font-style: normal;
           font-weight: 500;
           font-display: swap;
-          src: url('./fonts/Mrs_Eaves_All_Small_Caps_OT.woff2') format('woff2'), url('./fonts/Mrs_Eaves_All_Small_Caps_OT.woff2') format('woff');
+          src: url('./fonts/TexgyrebonumBold-1oE4.otf') format('woff2'), url('./fonts/TexgyrebonumBold-1oE4.otf') format('woff');
           unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
         /* latin */
@@ -42,7 +36,7 @@ function MyApp({ Component, pageProps }) {
 
   const theme = extendTheme({
     fonts: {
-      heading: `'MrsEavesAllCaps'`,
+      heading: `'TexgyrebonumBold'`,
       body: `'Bookinsanity'`,
     },
     components: {
