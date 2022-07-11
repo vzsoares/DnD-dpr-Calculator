@@ -80,7 +80,7 @@ export default function DieSection() {
       });
     };
     if (!switchState) {
-      updateInput(saveLogic(inputsState.damage_dice));
+      updateInput(saveLogic(inputsState.damage_dice), "damage_dice");
     } else if (switchState) {
       updateInput(saveLogic(inputsState.crit_dice), "crit_dice");
     }
