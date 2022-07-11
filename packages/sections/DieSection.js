@@ -112,6 +112,7 @@ export default function DieSection() {
         padding='0.5rem'
         shadow='md'
         height='100%'
+        gap='1'
       >
         <Flex gridArea={"a"} gap='1'>
           {editingIndex === -1 ? (
@@ -163,7 +164,9 @@ export default function DieSection() {
         </Flex>
         {/* switch */}
         <Flex flexDir='column' gridArea={"d"} alignItems='center'>
-          <Heading fontSize={"1rem"}>{switchState ? "Critical Hit" : "Normal Hit"}</Heading>
+          <Heading fontSize={"1rem"}>
+            {switchState ? "Critical Hit" : "Normal Hit"}
+          </Heading>
           <Switch
             isDisabled={editingIndex !== -1 && true}
             size='lg'

@@ -5,7 +5,7 @@ export default function SingleDie({ props: { value, func, color } }) {
     func();
   }
   return (
-    <Box h='50px' w='50px' bgColor={color || "green"} border='2px solid black'>
+    <Box h='40px' w='40px' bgColor={color || "green"} border='2px solid black'>
       <a
         style={{
           cursor: "pointer",

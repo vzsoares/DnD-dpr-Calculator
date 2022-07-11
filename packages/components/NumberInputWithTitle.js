@@ -38,6 +38,7 @@ export default function NumberInputWithTitle({
         onChange={(e) => setValue(Number(e), key)}
         size={size}
         w='max'
+        h='max'
       >
         <NumberInputField />
         <NumberInputStepper>
