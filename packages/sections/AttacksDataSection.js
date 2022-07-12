@@ -22,7 +22,7 @@ export default function AttackSection() {
   return (
     <Flex mb='1rem' gap='2' flexWrap='wrap' justifyContent='space-evenly'>
       <Flex maxW='468px' flexDir='column' justifyContent='space-between'>
-        <Heading>Current Attack info</Heading>
+        <Heading>Current Attack Damage</Heading>
         <AttackInfoTable
           props={{
             value: [
@@ -36,7 +36,7 @@ export default function AttackSection() {
         />
       </Flex>
       <Flex maxW='468px' flexDir='column' justifyContent='space-between'>
-        <Heading>Total Attacks info</Heading>
+        <Heading>Total Turn Damage</Heading>
         <AttackInfoTable
           props={{
             value: [
