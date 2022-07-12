@@ -20,10 +20,16 @@ export default function CurrentAttackTable({ props: { displayedAttackInfo } }) {
                 displayedAttackInfo?.chanceToHit * 100
               ).toFixed(2)}%`}</Th>
             </Tr>
+            <Tr>
+              <Th>Chance To Crit</Th>
+              <Th isNumeric fontWeight='bold'>{`${(
+                displayedAttackInfo?.chanceToCrit * 100
+              ).toFixed(2)}%`}</Th>
+            </Tr>
           </Thead>
           <Tbody>
             <Tr>
-              <Th>Average Damage Per Turn</Th>
+              <Th>Average Damage Per Round</Th>
               <Th></Th>
             </Tr>
             <Tr>
@@ -52,7 +58,7 @@ export default function CurrentAttackTable({ props: { displayedAttackInfo } }) {
           <Table size='sm' colorScheme='blackAlpha'>
             <Tbody>
               <Tr>
-                <Th>Hit Damage</Th>
+                <Th>normal hit</Th>
                 <Th></Th>
               </Tr>
               <Tr>
@@ -76,7 +82,7 @@ export default function CurrentAttackTable({ props: { displayedAttackInfo } }) {
           <Table size='sm' colorScheme='blackAlpha'>
             <Tbody>
               <Tr>
-                <Th>Crit Damage</Th>
+                <Th>Critical Hit</Th>
                 <Th></Th>
               </Tr>
               <Tr>

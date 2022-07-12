@@ -9,7 +9,7 @@ export default function SaveAtackBtn() {
         colorScheme='blackAlpha'
         color='#222'
       >
-        {editingIndex ? "Edit Attack" : "Save Attack"}
+        {editingIndex ? "Save Edit" : "Save Attack"}
       </Button>
     </>
   );
