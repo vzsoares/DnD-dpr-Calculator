@@ -52,19 +52,23 @@ export default function CurrentAttackTable({ props: { displayedAttackInfo } }) {
           <Table size='sm' colorScheme='blackAlpha'>
             <Tbody>
               <Tr>
-                <Th>Hit Damage</Th>
+                <Th pr='0'>Hit Damage</Th>
                 <Th></Th>
               </Tr>
               <Tr>
-                <Td pl='10%'>Dice</Td>
+                <Td pl='10%' pr='0'>
+                  Dice
+                </Td>
                 <Td isNumeric>{displayedAttackInfo?.nHit.dice}</Td>
               </Tr>
               <Tr>
-                <Td pl='10%'>Bonus</Td>
+                <Td pl='10%' pr='0'>
+                  Bonus
+                </Td>
                 <Td isNumeric>{displayedAttackInfo?.nHit.bonus}</Td>
               </Tr>
               <Tr>
-                <Td fontWeight='bold' pl='10%'>
+                <Td fontWeight='bold' pl='10%' pr='0'>
                   Total
                 </Td>
                 <Td isNumeric fontWeight='bold'>
@@ -76,19 +80,23 @@ export default function CurrentAttackTable({ props: { displayedAttackInfo } }) {
           <Table size='sm' colorScheme='blackAlpha'>
             <Tbody>
               <Tr>
-                <Th>Crit Damage</Th>
+                <Th pr='0'>Crit Damage</Th>
                 <Th></Th>
               </Tr>
               <Tr>
-                <Td pl='10%'>Dice</Td>
+                <Td pl='10%' pr='0'>
+                  Dice
+                </Td>
                 <Td isNumeric>{displayedAttackInfo?.cHit.dice}</Td>
               </Tr>
               <Tr>
-                <Td pl='10%'>Bonus</Td>
+                <Td pl='10%' pr='0'>
+                  Bonus
+                </Td>
                 <Td isNumeric>{displayedAttackInfo?.cHit.bonus}</Td>
               </Tr>
               <Tr>
-                <Td fontWeight='bold' pl='10%'>
+                <Td fontWeight='bold' pl='10%' pr='0'>
                   Total
                 </Td>
                 <Td isNumeric fontWeight='bold'>

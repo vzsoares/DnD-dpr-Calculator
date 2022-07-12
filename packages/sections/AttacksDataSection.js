@@ -14,7 +14,7 @@ export default function AttackSection() {
 
   return (
     <Flex mb='1rem' gap='2' flexWrap='wrap' justifyContent='space-evenly'>
-      <Flex maxW='468px' flexDir='column' justifyContent='flex-start' w='100%'>
+      <Flex maxW='468px' flexDir='column' justifyContent='flex-start'>
         <Heading mb='0.5rem'>Current Attack info</Heading>
         <CurrentAttackTable
           props={{
@@ -22,7 +22,7 @@ export default function AttackSection() {
           }}
         />
       </Flex>
-      <Flex maxW='468px' flexDir='column' justifyContent='flex-start' w='100%'>
+      <Flex maxW='468px' flexDir='column' justifyContent='flex-start'>
         <Heading mb='0.5rem'>Total Attacks info</Heading>
         <TotalAttacksTable
           props={{
