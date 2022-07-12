@@ -1,52 +1,35 @@
 import { Heading, Box, Flex } from "@chakra-ui/react";
-import AttackInfoTable from "../components/AttackInfoTable";
+import TotalAttacksTable from "../components/TotalAttacksTable";
+import CurrentAttackTable from "../components/CurrentAttackTable";
 import { useCalculatorContext } from "../features/calculatorContext.tsx";
 
 export default function AttackSection() {
   const { displayedAttackInfo, attacksList } = useCalculatorContext();
   // TOTALS
   const numberOfAttacks = attacksList.length;
-  const damageFromDice = attacksList.reduce((e, a) => {
-    return e + Number(a[1].damageFromDice);
-  }, 0);
-  const damageFromBonus = attacksList.reduce((e, a) => {
-    return e + Number(a[1].damageFromBonus);
-  }, 0);
-  const damageFromCritFactor = attacksList.reduce((e, a) => {
-    return e + Number(a[1].damageFromCritFactor);
-  }, 0);
+
   const totalAttackDamage = attacksList.reduce((e, a) => {
-    return e + Number(a[1].totalAttackDamage);
+    return e + Number(a[1].dpt.total);
   }, 0);
 
   return (
     <Flex mb='1rem' gap='2' flexWrap='wrap' justifyContent='space-evenly'>
-      <Flex maxW='468px' flexDir='column' justifyContent='space-between'>
-        <Heading>Current Attack Damage</Heading>
-        <AttackInfoTable
+      <Flex maxW='468px' flexDir='column' justifyContent='flex-start' w='100%'>
+        <Heading mb='0.5rem'>Current Attack info</Heading>
+        <CurrentAttackTable
           props={{
-            value: [
-              displayedAttackInfo?.damageFromDice,
-              displayedAttackInfo?.damageFromBonus,
-              displayedAttackInfo?.damageFromCritFactor,
-              displayedAttackInfo?.totalAttackDamage,
-            ],
-            lines: "",
+            displayedAttackInfo,
           }}
         />
       </Flex>
-      <Flex maxW='468px' flexDir='column' justifyContent='space-between'>
-        <Heading>Total Turn Damage</Heading>
-        <AttackInfoTable
+      <Flex maxW='468px' flexDir='column' justifyContent='flex-start' w='100%'>
+        <Heading mb='0.5rem'>Total Attacks info</Heading>
+        <TotalAttacksTable
           props={{
-            value: [
-              damageFromDice,
-              damageFromBonus,
-              damageFromCritFactor,
+            value: {
               totalAttackDamage,
               numberOfAttacks,
-            ],
-            lines: "Number of Attacks",
+            },
           }}
         />
       </Flex>

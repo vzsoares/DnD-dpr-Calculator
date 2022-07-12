@@ -1,4 +1,4 @@
-import { Grid, GridItem, Container, Flex, Button } from "@chakra-ui/react";
+import { Container, Flex, Button, Box } from "@chakra-ui/react";
 
 export default function AttackItem({
   props: { e, startEditingAttack, editingIndex, deleteAttack },
@@ -6,7 +6,7 @@ export default function AttackItem({
   return (
     <Flex maxW='350px'>
       <Container>{e[0].name || "Nameless Attack"}</Container>
-      <Container>
+      <Box>
         {e[1].totalAttackDamage}{" "}
         <Button
           maxH={"20px"}
@@ -18,7 +18,7 @@ export default function AttackItem({
         >
           {editingIndex === e[0].id ? "Delete" : "Edit"}
         </Button>
-      </Container>
+      </Box>
     </Flex>
   );
 }

@@ -7,7 +7,7 @@ export default function AttacksListSection() {
   const { attacksList, startEditingAttack, editingIndex, deleteAttack } =
     useCalculatorContext();
   return (
-    <Flex wrap='wrap' justifyContent='space-between'>
+    <Flex wrap='wrap' justifyContent='space-between' gap='1'>
       {attacksList.map((e, i) => {
         return (
           <AttackListItem
