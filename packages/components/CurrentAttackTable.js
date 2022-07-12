@@ -58,7 +58,7 @@ export default function CurrentAttackTable({ props: { displayedAttackInfo } }) {
           <Table size='sm' colorScheme='blackAlpha'>
             <Tbody>
               <Tr>
-                <Th>normal hit</Th>
+                <Th pr = '0'>normal hit</Th>
                 <Th></Th>
               </Tr>
               <Tr>
@@ -86,7 +86,7 @@ export default function CurrentAttackTable({ props: { displayedAttackInfo } }) {
           <Table size='sm' colorScheme='blackAlpha'>
             <Tbody>
               <Tr>
-                <Th>Critical Hit</Th>
+                <Th pr = '0'>Critical Hit</Th>
                 <Th></Th>
               </Tr>
               <Tr>
