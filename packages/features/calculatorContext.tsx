@@ -46,6 +46,7 @@ function CalculatorContextProvider({ children }) {
   useEffect(() => {
     setDisplayedAttackInfo({
       chanceToHit: currentAttackData?.p_hit(),
+      chanceToCrit: currentAttackData?.p_crit(),
       dpt: {
         dice: currentAttackData?.getDiceDPR().toFixed(2),
         bonus: currentAttackData?.getDmgBonusDPR().toFixed(2),

@@ -14,16 +14,16 @@ export default function AttackSection() {
 
   return (
     <Flex mb='1rem' gap='2' flexWrap='wrap' justifyContent='space-evenly'>
-      <Flex maxW='468px' flexDir='column' justifyContent='flex-start'>
-        <Heading mb='0.5rem'>Current Attack info</Heading>
+      <Flex maxW='468px' flexDir='column' justifyContent='flex-start' w='100%'>
+        <Heading mb='0.5rem'>Current Attack Info</Heading>
         <CurrentAttackTable
           props={{
             displayedAttackInfo,
           }}
         />
       </Flex>
-      <Flex maxW='468px' flexDir='column' justifyContent='flex-start'>
-        <Heading mb='0.5rem'>Total Attacks info</Heading>
+      <Flex maxW='468px' flexDir='column' justifyContent='flex-start' w='100%'>
+        <Heading mb='0.5rem'>Entire Turn Info</Heading>
         <TotalAttacksTable
           props={{
             value: {

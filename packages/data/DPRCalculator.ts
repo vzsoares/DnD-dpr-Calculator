@@ -226,6 +226,13 @@ export default class Attack {
       this.advantage_modifier
     );
   }
+
+  p_crit() {
+    return p_crit(
+      this.crit_range, 
+      this.advantage_modifier
+    );
+  }
 }
 
 //-----------------------------//
@@ -357,7 +364,7 @@ export function p_hit(A: number, B: number, M = 1): number {
 
 // Returns the probability of a critical hit
 // given the attacker's critical range, and advantage modifier.
-function p_crit(crit_range: number, adv_mod: number): number {
+export function p_crit(crit_range: number, adv_mod: number): number {
   return adv_mod < 1
     ? ((21 - crit_range) / 20) ** 2
     : 1 - Math.pow(1 - (21 - crit_range) / 20, adv_mod);
