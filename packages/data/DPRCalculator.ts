@@ -146,7 +146,7 @@ export default class Attack {
 
     // instantiate DiceSet object
     let crit_diceset = new DiceSet(tempcritdice);
-    return crit_diceset.getAverageRolls();
+    return crit_diceset.getAverageTotal();
   }
 
   // Returns the average damage from dice only ACCOUNTING FOR CHANCE TO HIT.
@@ -235,6 +235,13 @@ export default class Attack {
   getDPR() {
     return (
       this.getDiceDPR() + this.getDmgBonusDPR() + this.getAverageCritFactorDMG()
+    );
+  }
+  p_hit() {
+    return p_hit(
+      this.target_AC,
+      this.getEffectiveAttackBonus(),
+      this.advantage_modifier
     );
   }
 }
@@ -357,7 +364,7 @@ function p_save(DC: number, B: number, M = 1) {
 // given the target's armor class, the attacker's attack bonus,
 // and the attack's advantage modifier respectively.
 // use M = 0 for disadvantage, 1 for standard, 2 for advantage, 3 for elven accuracy.
-function p_hit(A: number, B: number, M = 1): number {
+export function p_hit(A: number, B: number, M = 1): number {
   if (A >= B + 20) {
     return M < 1 ? 0.05 ** 2 : 1 - (1 - 0.05) ** M;
   } else if (A <= B + 2) {

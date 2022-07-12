@@ -11,7 +11,7 @@ import React, {
 import { ClassStates, attackResults, SavedAttackData } from "../types";
 
 // @ts-ignore
-import DPRCalculator from "../data/DPRCalculator.ts";
+import DPRCalculator, { p_hit } from "../data/DPRCalculator.ts";
 // @ts-ignore
 import inputsReducer, { initialState } from "./DPRCalculatorReducer.ts";
 
@@ -26,6 +26,7 @@ function CalculatorContextProvider({ children }) {
   const [attacksList, setAttacksList] = useState([]);
   const [editingIndex, setEditingIndex] = useState("");
   //effects
+
   useEffect(() => {
     setCurrentAttackData(
       new DPRCalculator(
@@ -44,12 +45,23 @@ function CalculatorContextProvider({ children }) {
 
   useEffect(() => {
     setDisplayedAttackInfo({
-      damageFromDice: currentAttackData?.getDiceDPR().toFixed(2),
-      damageFromBonus: currentAttackData?.getDmgBonusDPR().toFixed(2),
-      damageFromCritFactor: currentAttackData
-        ?.getAverageCritFactorDMG()
-        .toFixed(2),
-      totalAttackDamage: currentAttackData?.getDPR().toFixed(2),
+      chanceToHit: currentAttackData?.p_hit(),
+      dpt: {
+        dice: currentAttackData?.getDiceDPR().toFixed(2),
+        bonus: currentAttackData?.getDmgBonusDPR().toFixed(2),
+        critFactor: currentAttackData?.getAverageCritFactorDMG().toFixed(2),
+        total: currentAttackData?.getDPR().toFixed(2),
+      },
+      nHit: {
+        dice: currentAttackData?.getAverageDiceDMG().toFixed(2),
+        bonus: currentAttackData?.getEffectiveDamageBonus().toFixed(2),
+        total: currentAttackData?.getAverageDMG().toFixed(2),
+      },
+      cHit: {
+        dice: currentAttackData?.getAverageCritDiceDMG().toFixed(2),
+        bonus: currentAttackData?.getEffectiveDamageBonus().toFixed(2),
+        total: currentAttackData?.getAverageCriticalDMG().toFixed(2),
+      },
     });
   }, [currentAttackData]);
 

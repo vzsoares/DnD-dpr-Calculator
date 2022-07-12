@@ -9,7 +9,7 @@ export default function AttackSection() {
   const numberOfAttacks = attacksList.length;
 
   const totalAttackDamage = attacksList.reduce((e, a) => {
-    return e + Number(a[1].totalAttackDamage);
+    return e + Number(a[1].dpt.total);
   }, 0);
 
   return (
@@ -18,7 +18,7 @@ export default function AttackSection() {
         <Heading mb='0.5rem'>Current Attack info</Heading>
         <CurrentAttackTable
           props={{
-            value: { displayedAttackInfo },
+            displayedAttackInfo,
           }}
         />
       </Flex>

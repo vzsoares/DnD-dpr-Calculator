@@ -8,7 +8,7 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
-export default function CurrentAttackTable({ props: { value } }) {
+export default function CurrentAttackTable({ props: { displayedAttackInfo } }) {
   return (
     <>
       <TableContainer>
@@ -16,7 +16,9 @@ export default function CurrentAttackTable({ props: { value } }) {
           <Thead>
             <Tr>
               <Th>Chance To Hit</Th>
-              <Th isNumeric>75%</Th>
+              <Th isNumeric fontWeight='bold'>{`${(
+                displayedAttackInfo?.chanceToHit * 100
+              ).toFixed(2)}%`}</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -26,21 +28,23 @@ export default function CurrentAttackTable({ props: { value } }) {
             </Tr>
             <Tr>
               <Td pl='10%'>Dice</Td>
-              <Td isNumeric>4.555</Td>
+              <Td isNumeric>{displayedAttackInfo?.dpt.dice}</Td>
             </Tr>
             <Tr>
               <Td pl='10%'>Bonus</Td>
-              <Td isNumeric>4.555</Td>
+              <Td isNumeric>{displayedAttackInfo?.dpt.bonus}</Td>
             </Tr>
             <Tr>
               <Td pl='10%'>Crit Factor</Td>
-              <Td isNumeric>4.555</Td>
+              <Td isNumeric>{displayedAttackInfo?.dpt.critFactor}</Td>
             </Tr>
             <Tr>
               <Td fontWeight='bold' pl='10%'>
                 Total
               </Td>
-              <Td isNumeric>4.555</Td>
+              <Td isNumeric fontWeight='bold'>
+                {displayedAttackInfo?.dpt.total}
+              </Td>
             </Tr>
           </Tbody>
         </Table>
@@ -53,17 +57,19 @@ export default function CurrentAttackTable({ props: { value } }) {
               </Tr>
               <Tr>
                 <Td pl='10%'>Dice</Td>
-                <Td isNumeric>4.555</Td>
+                <Td isNumeric>{displayedAttackInfo?.nHit.dice}</Td>
               </Tr>
               <Tr>
                 <Td pl='10%'>Bonus</Td>
-                <Td isNumeric>4.555</Td>
+                <Td isNumeric>{displayedAttackInfo?.nHit.bonus}</Td>
               </Tr>
               <Tr>
                 <Td fontWeight='bold' pl='10%'>
                   Total
                 </Td>
-                <Td isNumeric>4.555</Td>
+                <Td isNumeric fontWeight='bold'>
+                  {displayedAttackInfo?.nHit.total}
+                </Td>
               </Tr>
             </Tbody>
           </Table>
@@ -75,17 +81,19 @@ export default function CurrentAttackTable({ props: { value } }) {
               </Tr>
               <Tr>
                 <Td pl='10%'>Dice</Td>
-                <Td isNumeric>4.555</Td>
+                <Td isNumeric>{displayedAttackInfo?.cHit.dice}</Td>
               </Tr>
               <Tr>
                 <Td pl='10%'>Bonus</Td>
-                <Td isNumeric>4.555</Td>
+                <Td isNumeric>{displayedAttackInfo?.cHit.bonus}</Td>
               </Tr>
               <Tr>
                 <Td fontWeight='bold' pl='10%'>
                   Total
                 </Td>
-                <Td isNumeric>4.555</Td>
+                <Td isNumeric fontWeight='bold'>
+                  {displayedAttackInfo?.cHit.total}
+                </Td>
               </Tr>
             </Tbody>
           </Table>
