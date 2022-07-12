@@ -19,6 +19,7 @@ export function Dice10() {
     </Icon>
   );
 }
+
 export function Dice8() {
   return (
     <Icon w='100%' h='100%'>

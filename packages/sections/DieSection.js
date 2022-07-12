@@ -168,6 +168,7 @@ export default function DieSection() {
             {switchState ? "Critical Hit" : "Normal Hit"}
           </Heading>
           <Switch
+            colorScheme='yellow'
             isDisabled={editingIndex !== -1 && true}
             size='lg'
             onChange={() => {
