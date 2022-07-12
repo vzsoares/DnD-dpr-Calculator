@@ -20,7 +20,7 @@ class SavingThrowAttack {
   damage_bonus: number; // bonus static damage
   target_save_bonus: number; // enemy SavingThrow bonus
   target_save_advantage_modifier: number; // 0 for disadvantage, 1 for standard roll, 2 for advantage
-  save_for_half: boolean; // does the attack deal damage on failed save? for example, fireball does, disintegrate doesnt't
+  save_for_half: boolean; // does the attack deal damage on failed save? for example, fireball does, disintegrate doesn't
 
   constructor(
     name: string,
@@ -29,7 +29,8 @@ class SavingThrowAttack {
     damage_dice: DiceSet,
     damage_bonus: number,
     target_save_bonus: number,
-    target_save_advantage_modifier: number
+    target_save_advantage_modifier: number,
+    save_for_half: boolean
   ) {
     this.name = name;
     this.save_dc = save_dc;
@@ -38,6 +39,7 @@ class SavingThrowAttack {
     this.damage_bonus = damage_bonus;
     this.target_save_bonus = target_save_bonus;
     this.target_save_advantage_modifier = target_save_advantage_modifier;
+    this.save_for_half = save_for_half;
   }
 
   getDPR() {
@@ -95,18 +97,12 @@ export default class Attack {
 
   // Returns the effective attack bonus to account for great weapon master (or sharpshooter).
   getEffectiveAttackBonus() {
-    if (this.gwmsharp == true) {
-      return this.attack_bonus - 5;
-    }
-    return this.attack_bonus;
+    return this.gwmsharp == true ? this.attack_bonus - 5 : this.attack_bonus;
   }
 
   // Returns the effective damage bonus to account for great weapon master (or sharpshooter).
   getEffectiveDamageBonus() {
-    if (this.gwmsharp == true) {
-      return this.damage_bonus + 10;
-    }
-    return this.damage_bonus;
+    return this.gwmsharp == true ? this.damage_bonus + 10 : this.damage_bonus;
   }
 
   // Returns the average damage from dice rolls on normal hit.
@@ -153,28 +149,14 @@ export default class Attack {
   // For example, if your chance to hit is 65% and you are attacking with a greatsword with advantage,
   // your average damage will be (1 - (1 - 0.65) ^ 2) * (2 * 3.5) = 6.1425
   getDiceDPR() {
-    return (
-      this.getAverageDiceDMG() *
-      p_hit(
-        this.target_AC,
-        this.getEffectiveAttackBonus(),
-        this.advantage_modifier
-      )
-    );
+    return this.getAverageDiceDMG() * p_hit(this.target_AC, this.getEffectiveAttackBonus(), this.advantage_modifier);
   }
 
   // Returns the average damage from bonus only, ACCOUNTING FOR CHANCE TO HIT.
   // For example if chance to hit is 65% and you have a damage bonus of 5 and you are attacking with elven accuracy,
   // your damage will be (1 - (1 - 0.65) ^ 3) * 5 = 4.785625
   getDmgBonusDPR() {
-    return (
-      this.getEffectiveDamageBonus() *
-      p_hit(
-        this.target_AC,
-        this.getEffectiveAttackBonus(),
-        this.advantage_modifier
-      )
-    );
+    return this.getEffectiveDamageBonus() * p_hit(this.target_AC, this.getEffectiveAttackBonus(), this.advantage_modifier);
   }
 
   // Returns the average damage PER ATTACK derived from critical hits.
