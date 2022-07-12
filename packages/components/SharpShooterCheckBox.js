@@ -8,6 +8,7 @@ export default function SharpShooterCheckBox({
       <Heading fontSize={"1.0rem"}>Great Weapon Master / Sharpshooter</Heading>
       <Flex h='40px'>
         <Checkbox
+          colorScheme='yellow'
           isChecked={checked}
           onChange={(e) => setChecked(e.target.checked, key)}
           justifyContent='center'

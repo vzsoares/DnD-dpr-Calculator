@@ -40,6 +40,7 @@ export default function NumberInputWithTitle({
         size={size}
         w='max'
         h='max'
+        min='0'
         borderColor='#222'
       >
         <NumberInputField />
